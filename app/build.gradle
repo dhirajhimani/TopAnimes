@@ -7,7 +7,7 @@ android {
     compileSdkVersion  androidCompileSdkVersion
 
     defaultConfig {
-        applicationId "com.example.topanimes"
+        applicationId "com.anime.topanimes"
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
         versionCode 1
