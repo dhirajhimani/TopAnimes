@@ -1,0 +1,711 @@
+.
+├── app
+│   ├── build
+│   │   ├── generated
+│   │   │   ├── ap_generated_sources
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── res
+│   │   │   │   ├── pngs
+│   │   │   │   │   └── debug
+│   │   │   │   │       └── drawable-anydpi-v24
+│   │   │   │   └── resValues
+│   │   │   │       └── debug
+│   │   │   └── source
+│   │   │       ├── buildConfig
+│   │   │       │   └── debug
+│   │   │       │       └── com
+│   │   │       │           └── example
+│   │   │       │               └── topanimes
+│   │   │       ├── kapt
+│   │   │       │   └── debug
+│   │   │       │       └── com
+│   │   │       │           ├── bumptech
+│   │   │       │           │   └── glide
+│   │   │       │           └── example
+│   │   │       │               └── topanimes
+│   │   │       │                   └── di
+│   │   │       └── kaptKotlin
+│   │   │           └── debug
+│   │   ├── intermediates
+│   │   │   ├── aar_metadata_check
+│   │   │   │   └── debug
+│   │   │   ├── annotation_processor_list
+│   │   │   │   └── debug
+│   │   │   ├── compatible_screen_manifest
+│   │   │   │   └── debug
+│   │   │   ├── compile_and_runtime_not_namespaced_r_class_jar
+│   │   │   │   └── debug
+│   │   │   ├── compressed_assets
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── data_binding_layout_info_type_merge
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── dex
+│   │   │   │   └── debug
+│   │   │   │       ├── mergeExtDexDebug
+│   │   │   │       ├── mergeLibDexDebug
+│   │   │   │       └── mergeProjectDexDebug
+│   │   │   ├── dex_archive_input_jar_hashes
+│   │   │   │   └── debug
+│   │   │   ├── dex_number_of_buckets_file
+│   │   │   │   └── debug
+│   │   │   ├── duplicate_classes_check
+│   │   │   │   └── debug
+│   │   │   ├── external_file_lib_dex_archives
+│   │   │   │   └── debug
+│   │   │   ├── external_libs_dex_archive
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── external_libs_dex_archive_with_artifact_transforms
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── incremental
+│   │   │   │   ├── debug-mergeJavaRes
+│   │   │   │   │   └── zip-cache
+│   │   │   │   ├── debug-mergeNativeLibs
+│   │   │   │   │   └── zip-cache
+│   │   │   │   ├── mergeDebugAssets
+│   │   │   │   ├── mergeDebugJniLibFolders
+│   │   │   │   ├── mergeDebugResources
+│   │   │   │   │   ├── merged.dir
+│   │   │   │   │   │   ├── values
+│   │   │   │   │   │   ├── values-af
+│   │   │   │   │   │   ├── values-am
+│   │   │   │   │   │   ├── values-ar
+│   │   │   │   │   │   ├── values-as
+│   │   │   │   │   │   ├── values-az
+│   │   │   │   │   │   ├── values-b+sr+Latn
+│   │   │   │   │   │   ├── values-be
+│   │   │   │   │   │   ├── values-bg
+│   │   │   │   │   │   ├── values-bn
+│   │   │   │   │   │   ├── values-bs
+│   │   │   │   │   │   ├── values-ca
+│   │   │   │   │   │   ├── values-cs
+│   │   │   │   │   │   ├── values-da
+│   │   │   │   │   │   ├── values-de
+│   │   │   │   │   │   ├── values-el
+│   │   │   │   │   │   ├── values-en-rAU
+│   │   │   │   │   │   ├── values-en-rCA
+│   │   │   │   │   │   ├── values-en-rGB
+│   │   │   │   │   │   ├── values-en-rIN
+│   │   │   │   │   │   ├── values-en-rXC
+│   │   │   │   │   │   ├── values-es
+│   │   │   │   │   │   ├── values-es-rUS
+│   │   │   │   │   │   ├── values-et
+│   │   │   │   │   │   ├── values-eu
+│   │   │   │   │   │   ├── values-fa
+│   │   │   │   │   │   ├── values-fi
+│   │   │   │   │   │   ├── values-fr
+│   │   │   │   │   │   ├── values-fr-rCA
+│   │   │   │   │   │   ├── values-gl
+│   │   │   │   │   │   ├── values-gu
+│   │   │   │   │   │   ├── values-h360dp-land-v13
+│   │   │   │   │   │   ├── values-h480dp-land-v13
+│   │   │   │   │   │   ├── values-h720dp-v13
+│   │   │   │   │   │   ├── values-hdpi-v4
+│   │   │   │   │   │   ├── values-hi
+│   │   │   │   │   │   ├── values-hr
+│   │   │   │   │   │   ├── values-hu
+│   │   │   │   │   │   ├── values-hy
+│   │   │   │   │   │   ├── values-in
+│   │   │   │   │   │   ├── values-is
+│   │   │   │   │   │   ├── values-it
+│   │   │   │   │   │   ├── values-iw
+│   │   │   │   │   │   ├── values-ja
+│   │   │   │   │   │   ├── values-ka
+│   │   │   │   │   │   ├── values-kk
+│   │   │   │   │   │   ├── values-km
+│   │   │   │   │   │   ├── values-kn
+│   │   │   │   │   │   ├── values-ko
+│   │   │   │   │   │   ├── values-ky
+│   │   │   │   │   │   ├── values-land
+│   │   │   │   │   │   ├── values-large-v4
+│   │   │   │   │   │   ├── values-ldltr-v21
+│   │   │   │   │   │   ├── values-lo
+│   │   │   │   │   │   ├── values-lt
+│   │   │   │   │   │   ├── values-lv
+│   │   │   │   │   │   ├── values-mk
+│   │   │   │   │   │   ├── values-ml
+│   │   │   │   │   │   ├── values-mn
+│   │   │   │   │   │   ├── values-mr
+│   │   │   │   │   │   ├── values-ms
+│   │   │   │   │   │   ├── values-my
+│   │   │   │   │   │   ├── values-nb
+│   │   │   │   │   │   ├── values-ne
+│   │   │   │   │   │   ├── values-night-v8
+│   │   │   │   │   │   ├── values-nl
+│   │   │   │   │   │   ├── values-or
+│   │   │   │   │   │   ├── values-pa
+│   │   │   │   │   │   ├── values-pl
+│   │   │   │   │   │   ├── values-port
+│   │   │   │   │   │   ├── values-pt
+│   │   │   │   │   │   ├── values-pt-rBR
+│   │   │   │   │   │   ├── values-pt-rPT
+│   │   │   │   │   │   ├── values-ro
+│   │   │   │   │   │   ├── values-ru
+│   │   │   │   │   │   ├── values-si
+│   │   │   │   │   │   ├── values-sk
+│   │   │   │   │   │   ├── values-sl
+│   │   │   │   │   │   ├── values-small-v4
+│   │   │   │   │   │   ├── values-sq
+│   │   │   │   │   │   ├── values-sr
+│   │   │   │   │   │   ├── values-sv
+│   │   │   │   │   │   ├── values-sw
+│   │   │   │   │   │   ├── values-sw600dp-v13
+│   │   │   │   │   │   ├── values-ta
+│   │   │   │   │   │   ├── values-te
+│   │   │   │   │   │   ├── values-th
+│   │   │   │   │   │   ├── values-tl
+│   │   │   │   │   │   ├── values-tr
+│   │   │   │   │   │   ├── values-uk
+│   │   │   │   │   │   ├── values-ur
+│   │   │   │   │   │   ├── values-uz
+│   │   │   │   │   │   ├── values-v16
+│   │   │   │   │   │   ├── values-v17
+│   │   │   │   │   │   ├── values-v18
+│   │   │   │   │   │   ├── values-v21
+│   │   │   │   │   │   ├── values-v22
+│   │   │   │   │   │   ├── values-v23
+│   │   │   │   │   │   ├── values-v24
+│   │   │   │   │   │   ├── values-v25
+│   │   │   │   │   │   ├── values-v26
+│   │   │   │   │   │   ├── values-v28
+│   │   │   │   │   │   ├── values-vi
+│   │   │   │   │   │   ├── values-w360dp-port-v13
+│   │   │   │   │   │   ├── values-w480dp-port-v13
+│   │   │   │   │   │   ├── values-watch-v20
+│   │   │   │   │   │   ├── values-watch-v21
+│   │   │   │   │   │   ├── values-xlarge-v4
+│   │   │   │   │   │   ├── values-zh-rCN
+│   │   │   │   │   │   ├── values-zh-rHK
+│   │   │   │   │   │   ├── values-zh-rTW
+│   │   │   │   │   │   └── values-zu
+│   │   │   │   │   └── stripped.dir
+│   │   │   │   ├── mergeDebugShaders
+│   │   │   │   ├── packageDebug
+│   │   │   │   │   └── tmp
+│   │   │   │   │       └── debug
+│   │   │   │   │           └── zip-cache
+│   │   │   │   └── processDebugResources
+│   │   │   ├── javac
+│   │   │   │   └── debug
+│   │   │   │       └── classes
+│   │   │   │           └── com
+│   │   │   │               ├── bumptech
+│   │   │   │               │   └── glide
+│   │   │   │               └── example
+│   │   │   │                   └── topanimes
+│   │   │   │                       └── di
+│   │   │   ├── manifest_merge_blame_file
+│   │   │   │   └── debug
+│   │   │   ├── merged_assets
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── merged_java_res
+│   │   │   │   └── debug
+│   │   │   ├── merged_jni_libs
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── merged_manifest
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── merged_manifests
+│   │   │   │   └── debug
+│   │   │   ├── merged_native_libs
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── merged_res_blame_folder
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   │           ├── multi-v2
+│   │   │   │           └── single
+│   │   │   ├── merged_shaders
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── mixed_scope_dex_archive
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── navigation_json
+│   │   │   │   └── debug
+│   │   │   ├── packaged_manifests
+│   │   │   │   └── debug
+│   │   │   ├── processed_res
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── project_dex_archive
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   │           └── com
+│   │   │   │               ├── bumptech
+│   │   │   │               │   └── glide
+│   │   │   │               └── example
+│   │   │   │                   └── topanimes
+│   │   │   │                       └── di
+│   │   │   ├── res
+│   │   │   │   └── merged
+│   │   │   │       └── debug
+│   │   │   ├── runtime_symbol_list
+│   │   │   │   └── debug
+│   │   │   ├── sub_project_dex_archive
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── symbol_list_with_package_name
+│   │   │   │   └── debug
+│   │   │   └── validate_signing_config
+│   │   │       └── debug
+│   │   ├── kotlin
+│   │   │   ├── compileDebugKotlin
+│   │   │   │   └── caches-jvm
+│   │   │   │       ├── inputs
+│   │   │   │       ├── jvm
+│   │   │   │       │   └── kotlin
+│   │   │   │       └── lookups
+│   │   │   └── kaptGenerateStubsDebugKotlin
+│   │   │       └── caches-jvm
+│   │   │           ├── inputs
+│   │   │           ├── jvm
+│   │   │           │   └── kotlin
+│   │   │           └── lookups
+│   │   ├── outputs
+│   │   │   ├── apk
+│   │   │   │   └── debug
+│   │   │   └── logs
+│   │   └── tmp
+│   │       ├── compileDebugJavaWithJavac
+│   │       ├── kapt3
+│   │       │   ├── classes
+│   │       │   │   └── debug
+│   │       │   ├── incApCache
+│   │       │   │   └── debug
+│   │       │   ├── incrementalData
+│   │       │   │   └── debug
+│   │       │   │       ├── META-INF
+│   │       │   │       └── com
+│   │       │   │           └── example
+│   │       │   │               └── topanimes
+│   │       │   │                   └── di
+│   │       │   └── stubs
+│   │       │       └── debug
+│   │       │           ├── com
+│   │       │           │   └── example
+│   │       │           │       └── topanimes
+│   │       │           │           └── di
+│   │       │           └── error
+│   │       └── kotlin-classes
+│   │           └── debug
+│   │               ├── META-INF
+│   │               └── com
+│   │                   └── example
+│   │                       └── topanimes
+│   │                           └── di
+│   ├── libs
+│   └── src
+│       ├── androidTest
+│       │   └── java
+│       │       └── com
+│       │           └── example
+│       │               └── topanimes
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── example
+│       │   │           └── topanimes
+│       │   │               └── di
+│       │   └── res
+│       │       ├── drawable
+│       │       ├── drawable-v24
+│       │       ├── layout
+│       │       ├── mipmap-anydpi-v26
+│       │       ├── mipmap-hdpi
+│       │       ├── mipmap-mdpi
+│       │       ├── mipmap-xhdpi
+│       │       ├── mipmap-xxhdpi
+│       │       ├── mipmap-xxxhdpi
+│       │       ├── values
+│       │       └── values-night
+│       └── test
+│           └── java
+│               └── com
+│                   └── example
+│                       └── topanimes
+├── build
+│   └── kotlin
+│       └── sessions
+├── core
+│   ├── build
+│   │   ├── generated
+│   │   │   ├── ap_generated_sources
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── res
+│   │   │   │   ├── pngs
+│   │   │   │   │   └── debug
+│   │   │   │   └── resValues
+│   │   │   │       └── debug
+│   │   │   └── source
+│   │   │       ├── buildConfig
+│   │   │       │   └── debug
+│   │   │       │       └── com
+│   │   │       │           └── example
+│   │   │       │               └── core
+│   │   │       ├── kapt
+│   │   │       │   └── debug
+│   │   │       │       └── com
+│   │   │       │           └── example
+│   │   │       │               └── core
+│   │   │       │                   ├── connectivity
+│   │   │       │                   ├── di
+│   │   │       │                   ├── view
+│   │   │       │                   └── work
+│   │   │       └── kaptKotlin
+│   │   │           └── debug
+│   │   ├── intermediates
+│   │   │   ├── aapt_friendly_merged_manifests
+│   │   │   │   └── debug
+│   │   │   │       └── aapt
+│   │   │   ├── aar_metadata
+│   │   │   │   └── debug
+│   │   │   ├── annotation_processor_list
+│   │   │   │   └── debug
+│   │   │   ├── compile_library_classes_jar
+│   │   │   │   └── debug
+│   │   │   ├── compile_r_class_jar
+│   │   │   │   └── debug
+│   │   │   ├── compile_symbol_list
+│   │   │   │   └── debug
+│   │   │   ├── compiled_local_resources
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── data_binding_layout_info_type_package
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── incremental
+│   │   │   │   ├── mergeDebugJniLibFolders
+│   │   │   │   ├── mergeDebugShaders
+│   │   │   │   ├── packageDebugAssets
+│   │   │   │   └── packageDebugResources
+│   │   │   │       ├── merged.dir
+│   │   │   │       └── stripped.dir
+│   │   │   ├── javac
+│   │   │   │   └── debug
+│   │   │   │       └── classes
+│   │   │   │           └── com
+│   │   │   │               └── example
+│   │   │   │                   └── core
+│   │   │   │                       ├── connectivity
+│   │   │   │                       ├── di
+│   │   │   │                       ├── view
+│   │   │   │                       └── work
+│   │   │   ├── library_assets
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── library_java_res
+│   │   │   │   └── debug
+│   │   │   ├── library_jni
+│   │   │   │   └── debug
+│   │   │   │       └── jni
+│   │   │   ├── library_manifest
+│   │   │   │   └── debug
+│   │   │   ├── local_only_symbol_list
+│   │   │   │   └── debug
+│   │   │   ├── manifest_merge_blame_file
+│   │   │   │   └── debug
+│   │   │   ├── merged_jni_libs
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── merged_shaders
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── navigation_json
+│   │   │   │   └── debug
+│   │   │   ├── packaged_manifests
+│   │   │   │   └── debug
+│   │   │   ├── packaged_res
+│   │   │   │   └── debug
+│   │   │   ├── public_res
+│   │   │   │   └── debug
+│   │   │   ├── runtime_library_classes_jar
+│   │   │   │   └── debug
+│   │   │   └── symbol_list_with_package_name
+│   │   │       └── debug
+│   │   ├── kotlin
+│   │   │   ├── compileDebugKotlin
+│   │   │   │   └── caches-jvm
+│   │   │   │       ├── inputs
+│   │   │   │       ├── jvm
+│   │   │   │       │   └── kotlin
+│   │   │   │       └── lookups
+│   │   │   └── kaptGenerateStubsDebugKotlin
+│   │   │       └── caches-jvm
+│   │   │           ├── inputs
+│   │   │           ├── jvm
+│   │   │           │   └── kotlin
+│   │   │           └── lookups
+│   │   ├── outputs
+│   │   │   └── logs
+│   │   └── tmp
+│   │       ├── compileDebugJavaWithJavac
+│   │       ├── kapt3
+│   │       │   ├── classes
+│   │       │   │   └── debug
+│   │       │   ├── incApCache
+│   │       │   │   └── debug
+│   │       │   ├── incrementalData
+│   │       │   │   └── debug
+│   │       │   │       ├── META-INF
+│   │       │   │       └── com
+│   │       │   │           └── example
+│   │       │   │               └── core
+│   │       │   │                   ├── connectivity
+│   │       │   │                   ├── di
+│   │       │   │                   ├── providers
+│   │       │   │                   ├── scheduler
+│   │       │   │                   ├── view
+│   │       │   │                   └── work
+│   │       │   └── stubs
+│   │       │       └── debug
+│   │       │           ├── com
+│   │       │           │   └── example
+│   │       │           │       └── core
+│   │       │           │           ├── connectivity
+│   │       │           │           ├── di
+│   │       │           │           ├── providers
+│   │       │           │           ├── scheduler
+│   │       │           │           ├── view
+│   │       │           │           └── work
+│   │       │           └── error
+│   │       └── kotlin-classes
+│   │           └── debug
+│   │               ├── META-INF
+│   │               └── com
+│   │                   └── example
+│   │                       └── core
+│   │                           ├── connectivity
+│   │                           ├── di
+│   │                           ├── providers
+│   │                           ├── scheduler
+│   │                           ├── view
+│   │                           └── work
+│   ├── libs
+│   └── src
+│       ├── androidTest
+│       │   └── java
+│       │       └── com
+│       │           └── example
+│       │               └── core
+│       ├── main
+│       │   └── java
+│       │       └── com
+│       │           └── example
+│       │               └── core
+│       │                   ├── connectivity
+│       │                   ├── di
+│       │                   ├── providers
+│       │                   ├── scheduler
+│       │                   ├── view
+│       │                   └── work
+│       └── test
+│           └── java
+│               └── com
+│                   └── example
+│                       └── core
+├── gradle
+│   └── wrapper
+├── media
+└── topanimerepos
+    ├── build
+    │   ├── generated
+    │   │   ├── ap_generated_sources
+    │   │   │   └── debug
+    │   │   │       └── out
+    │   │   ├── res
+    │   │   │   ├── pngs
+    │   │   │   │   └── debug
+    │   │   │   └── resValues
+    │   │   │       └── debug
+    │   │   └── source
+    │   │       ├── buildConfig
+    │   │       │   └── debug
+    │   │       │       └── com
+    │   │       │           └── example
+    │   │       │               └── topanimesrepos
+    │   │       ├── kapt
+    │   │       │   └── debug
+    │   │       │       └── com
+    │   │       │           └── example
+    │   │       │               └── topanimesrepos
+    │   │       │                   ├── database
+    │   │       │                   ├── di
+    │   │       │                   ├── scheduler
+    │   │       │                   └── view
+    │   │       └── kaptKotlin
+    │   │           └── debug
+    │   ├── intermediates
+    │   │   ├── aapt_friendly_merged_manifests
+    │   │   │   └── debug
+    │   │   │       └── aapt
+    │   │   ├── aar_metadata
+    │   │   │   └── debug
+    │   │   ├── annotation_processor_list
+    │   │   │   └── debug
+    │   │   ├── compile_library_classes_jar
+    │   │   │   └── debug
+    │   │   ├── compile_r_class_jar
+    │   │   │   └── debug
+    │   │   ├── compile_symbol_list
+    │   │   │   └── debug
+    │   │   ├── compiled_local_resources
+    │   │   │   └── debug
+    │   │   │       └── out
+    │   │   ├── data_binding_layout_info_type_package
+    │   │   │   └── debug
+    │   │   │       └── out
+    │   │   ├── incremental
+    │   │   │   ├── mergeDebugJniLibFolders
+    │   │   │   ├── mergeDebugShaders
+    │   │   │   ├── packageDebugAssets
+    │   │   │   └── packageDebugResources
+    │   │   │       ├── merged.dir
+    │   │   │       │   └── values
+    │   │   │       └── stripped.dir
+    │   │   ├── javac
+    │   │   │   └── debug
+    │   │   │       └── classes
+    │   │   │           └── com
+    │   │   │               └── example
+    │   │   │                   └── topanimesrepos
+    │   │   │                       ├── database
+    │   │   │                       ├── di
+    │   │   │                       ├── scheduler
+    │   │   │                       └── view
+    │   │   ├── library_assets
+    │   │   │   └── debug
+    │   │   │       └── out
+    │   │   ├── library_java_res
+    │   │   │   └── debug
+    │   │   ├── library_jni
+    │   │   │   └── debug
+    │   │   │       └── jni
+    │   │   ├── library_manifest
+    │   │   │   └── debug
+    │   │   ├── local_only_symbol_list
+    │   │   │   └── debug
+    │   │   ├── manifest_merge_blame_file
+    │   │   │   └── debug
+    │   │   ├── merged_jni_libs
+    │   │   │   └── debug
+    │   │   │       └── out
+    │   │   ├── merged_shaders
+    │   │   │   └── debug
+    │   │   │       └── out
+    │   │   ├── navigation_json
+    │   │   │   └── debug
+    │   │   ├── packaged_manifests
+    │   │   │   └── debug
+    │   │   ├── packaged_res
+    │   │   │   └── debug
+    │   │   │       ├── drawable
+    │   │   │       ├── layout
+    │   │   │       ├── menu
+    │   │   │       └── values
+    │   │   ├── public_res
+    │   │   │   └── debug
+    │   │   ├── runtime_library_classes_jar
+    │   │   │   └── debug
+    │   │   └── symbol_list_with_package_name
+    │   │       └── debug
+    │   ├── kotlin
+    │   │   ├── compileDebugKotlin
+    │   │   │   └── caches-jvm
+    │   │   │       ├── inputs
+    │   │   │       ├── jvm
+    │   │   │       │   └── kotlin
+    │   │   │       └── lookups
+    │   │   └── kaptGenerateStubsDebugKotlin
+    │   │       └── caches-jvm
+    │   │           ├── inputs
+    │   │           ├── jvm
+    │   │           │   └── kotlin
+    │   │           └── lookups
+    │   ├── outputs
+    │   │   └── logs
+    │   └── tmp
+    │       ├── compileDebugJavaWithJavac
+    │       ├── kapt3
+    │       │   ├── classes
+    │       │   │   └── debug
+    │       │   ├── incApCache
+    │       │   │   └── debug
+    │       │   ├── incrementalData
+    │       │   │   └── debug
+    │       │   │       ├── META-INF
+    │       │   │       └── com
+    │       │   │           └── example
+    │       │   │               └── topanimesrepos
+    │       │   │                   ├── database
+    │       │   │                   ├── di
+    │       │   │                   ├── entity
+    │       │   │                   ├── net
+    │       │   │                   ├── scheduler
+    │       │   │                   └── view
+    │       │   └── stubs
+    │       │       └── debug
+    │       │           ├── com
+    │       │           │   └── example
+    │       │           │       └── topanimesrepos
+    │       │           │           ├── database
+    │       │           │           ├── di
+    │       │           │           ├── entity
+    │       │           │           ├── net
+    │       │           │           ├── scheduler
+    │       │           │           └── view
+    │       │           └── error
+    │       └── kotlin-classes
+    │           └── debug
+    │               ├── META-INF
+    │               └── com
+    │                   └── example
+    │                       └── topanimesrepos
+    │                           ├── database
+    │                           ├── di
+    │                           ├── entity
+    │                           ├── net
+    │                           ├── scheduler
+    │                           └── view
+    ├── libs
+    └── src
+        ├── androidTest
+        │   └── java
+        │       └── com
+        │           └── example
+        │               └── topanimesrepos
+        ├── main
+        │   ├── java
+        │   │   └── com
+        │   │       └── example
+        │   │           └── topanimesrepos
+        │   │               ├── database
+        │   │               ├── di
+        │   │               ├── entity
+        │   │               ├── net
+        │   │               ├── scheduler
+        │   │               └── view
+        │   └── res
+        │       ├── drawable
+        │       ├── drawable-hdpi
+        │       ├── drawable-mdpi
+        │       ├── drawable-xhdpi
+        │       ├── drawable-xxhdpi
+        │       ├── drawable-xxxhdpi
+        │       ├── layout
+        │       ├── menu
+        │       └── values
+        └── test
+            └── java
+                └── com
+                    └── example
+                        └── topanimesrepos
+
+708 directories
