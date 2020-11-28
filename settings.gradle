@@ -1,0 +1,4 @@
+include ':topanimerepos'
+include ':core'
+include ':app'
+rootProject.name = "TopAnimes"

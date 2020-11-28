@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="signals_jammed">Signals jammed. They are already here</string>
+    <string name="sort_by_members">Sort By Members</string>
+    <string name="sort_by_name">Sort By Name</string>
+    <string name="retry">Retry</string>
+    <string name="anime_image">Anime Image</string>
+</resources>

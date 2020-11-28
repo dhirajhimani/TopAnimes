@@ -1,0 +1,20 @@
+<resources>
+
+    <style name="ShapeAppearanceOverlay.Pill">
+        <item name="cornerSize">10%</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Cut">
+        <item name="cornerSize">25%</item>
+        <item name="cornerFamily">cut</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Cut.Medium">
+        <item name="cornerSize">16dp</item>
+        <item name="cornerFamily">cut</item>
+        <item name="cornerFamilyTopRight">cut</item>
+    </style>
+
+</resources>
