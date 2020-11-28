@@ -33,7 +33,7 @@ class TopAnimesReposViewHolder(
             .into(avatarImageView)
 
         repositoryView.setOnClickListener {
-            clickListener.onItemClick(position, isExpanded)
+            clickListener.onItemClick(repositoryView.context, anime, isExpanded)
         }
     }
 }

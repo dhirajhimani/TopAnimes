@@ -1,5 +1,8 @@
 package com.example.topanimesrepos.view
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -42,16 +45,13 @@ class TopAnimesReposAdapter(
         }
     }
 
-    fun getItems(): List<Anime> {
-        return items
-    }
-
     fun replace(animes: List<Anime>) {
         items.clear()
         items += animes
         notifyDataSetChanged()
     }
 
-    override fun onItemClick(position: Int, isExpanded: Boolean) {
+    override fun onItemClick(context: Context, anime: Anime, isExpanded: Boolean) {
+        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(anime.webUrl)))
     }
 }

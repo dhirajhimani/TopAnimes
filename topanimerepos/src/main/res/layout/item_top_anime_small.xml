@@ -45,6 +45,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/image"
         app:layout_constraintEnd_toEndOf="@+id/image"
         app:layout_constraintStart_toStartOf="@+id/image"
+        android:maxLines="1"
         tools:text="Queen" />
     
 </androidx.constraintlayout.widget.ConstraintLayout>

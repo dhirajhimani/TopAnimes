@@ -10,7 +10,7 @@ class DatabaseRepositoriesMapper :
         return DbRepository(
             source.rank,
             source.title,
-            source.myAnimeListURl,
+            source.webUrl,
             source.image_url,
             source.members,
             source.expiry
