@@ -16,8 +16,15 @@ class TopAnimesReposAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopAnimesReposViewHolder =
         TopAnimesReposViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_anime, parent, false)
+                .inflate(getLayoutId(viewType), parent, false)
         )
+
+    private fun getLayoutId(viewType: Int) =
+        when(viewType) {
+            ViewSize.FULL.ordinal -> R.layout.item_top_anime_full
+            ViewSize.DOUBLE.ordinal -> R.layout.item_top_anime_medium
+            else -> R.layout.item_top_anime_small
+        }
 
     override fun getItemCount(): Int = items.size
 
@@ -46,8 +53,5 @@ class TopAnimesReposAdapter(
     }
 
     override fun onItemClick(position: Int, isExpanded: Boolean) {
-        mExpandedPosition = if (isExpanded) -1 else position
-        notifyItemChanged(previousExpandedPosition)
-        notifyItemChanged(position)
     }
 }

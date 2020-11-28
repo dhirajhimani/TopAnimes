@@ -5,7 +5,7 @@
         android:menuCategory="system"
         android:title="@string/sort_by_members" />
     <item
-        android:id="@+id/sort_by_name"
+        android:id="@+id/sort_by_rank"
         android:menuCategory="system"
-        android:title="@string/sort_by_name" />
+        android:title="@string/sort_by_rank" />
 </menu>

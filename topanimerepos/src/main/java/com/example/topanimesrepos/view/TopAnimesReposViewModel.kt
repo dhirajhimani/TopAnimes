@@ -57,12 +57,12 @@ class TopAnimesReposViewModel @Inject constructor(
         }
     }
 
-    fun sortByStars() {
+    fun sortByMemebers() {
         launch {
             withContext(Dispatchers.Default) {
                 when(val data = mutableLiveData.value) {
                     is TopAnimesReposViewState.ShowRepositories -> {
-                        val items = data.animes.sortedBy { it.members }
+                        val items = data.animes.sortedByDescending { it.members }
                         update(TopAnimesReposState.Success(items))
                     }
                 }
@@ -70,14 +70,14 @@ class TopAnimesReposViewModel @Inject constructor(
         }
     }
 
-    fun sortByName() {
+    fun sortByRank() {
         launch {
             sortButtonsEnabled.value = false
             withContext(Dispatchers.Default) {
                 delay(1000)
                     when (val data = mutableLiveData.value) {
                         is TopAnimesReposViewState.ShowRepositories -> {
-                            val items = data.animes.sortedBy { it.title }
+                            val items = data.animes.sortedBy { it.rank }
                             update(TopAnimesReposState.Success(items))
                         }
                         else -> {

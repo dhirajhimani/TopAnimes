@@ -12,15 +12,10 @@ import com.example.topanimesrepos.entity.Anime
 
 class TopAnimesReposViewHolder(
     item: View,
-    private val repositoryView: View = item.findViewById(R.id.repository_view),
-    private val extraInfoView: View = item.findViewById(R.id.contentGroup),
-    private val avatarImageView: ImageView = item.findViewById(R.id.avatar_image),
+    private val repositoryView: View = item.findViewById(R.id.anime_view),
+    private val avatarImageView: ImageView = item.findViewById(R.id.image),
     private val nameView: TextView = item.findViewById(R.id.name),
-    private val descriptionView: TextView = item.findViewById(R.id.description),
-    private val repoUrlView: TextView = item.findViewById(R.id.repo_url),
-    private val languageView: TextView = item.findViewById(R.id.language),
-    private val starCountView: TextView = item.findViewById(R.id.star_count),
-    private val forkCountView: TextView = item.findViewById(R.id.fork_count)
+    private val rankView: TextView = item.findViewById(R.id.rank),
 ) : RecyclerView.ViewHolder(item) {
 
     fun bind(
@@ -30,20 +25,13 @@ class TopAnimesReposViewHolder(
         clickListener: ItemClickListener
     ) {
         nameView.text = anime.title
-        descriptionView.text = "Unknown"
-        repoUrlView.text = anime.myAnimeListURl
-        languageView.text = "N/A"
-        starCountView.text = anime.members.toString()
-        forkCountView.text = "N/A"
+        rankView.text = anime.rank.toString()
 
         Glide.with(avatarImageView)
             .load(anime.image_url)
             .transition(withCrossFade())
-            .circleCrop()
             .into(avatarImageView)
 
-        extraInfoView.visibility = if (isExpanded) View.VISIBLE else View.GONE
-        extraInfoView.isActivated = isExpanded
         repositoryView.setOnClickListener {
             clickListener.onItemClick(position, isExpanded)
         }

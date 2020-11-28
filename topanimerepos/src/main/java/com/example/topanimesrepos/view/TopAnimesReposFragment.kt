@@ -159,7 +159,7 @@ class TopAnimesReposFragment : DaggerFragment() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
-        val item1 = menu.findItem(R.id.sort_by_name)
+        val item1 = menu.findItem(R.id.sort_by_rank)
         item1.isEnabled = isButtonEnable
         super.onPrepareOptionsMenu(menu)
     }
@@ -170,14 +170,14 @@ class TopAnimesReposFragment : DaggerFragment() {
 //                githubReposAdapter.apply {
 //                    replace(this.getItems().sortedBy { it.stars })
 //                }
-                topAnimesReposViewModel.sortByStars()
+                topAnimesReposViewModel.sortByMemebers()
                 return true
             }
-            R.id.sort_by_name -> {
+            R.id.sort_by_rank -> {
 //                githubReposAdapter.apply {
 //                    replace(this.getItems().sortedBy { it.name })
 //                }
-                topAnimesReposViewModel.sortByName()
+                topAnimesReposViewModel.sortByRank()
                 return true
             }
         }
