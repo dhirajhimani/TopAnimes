@@ -15,7 +15,7 @@
 
 ***You can Install and test latest Android app from below 👇***
 
-[![TopAnimes App](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://github.com/dhirajhimani/TopAnimes)
+[![TopAnimes App](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/details?id=com.anime.topanimes)
 
 
 ## About
