@@ -1,7 +1,7 @@
 # TopAnimes
 ![](media/screen2.png)
 
-# TopAnimes 🥺
+# TopAnimes 👨‍💻
 
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Github Followers](https://img.shields.io/github/followers/dhirajhimani?label=Follow&style=social)
