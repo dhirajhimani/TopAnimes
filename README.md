@@ -1,5 +1,5 @@
 # TopAnimes
-![](media/Screen2_small.jpg)
+![](media/topanimes_1.jpg)
 
 # TopAnimes 👨‍💻
 
