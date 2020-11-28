@@ -24,7 +24,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textColor="@color/common_text_color"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/description"
         app:layout_constraintRight_toRightOf="parent"

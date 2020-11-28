@@ -16,7 +16,7 @@ class TopAnimesReposAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopAnimesReposViewHolder =
         TopAnimesReposViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_repository, parent, false)
+                .inflate(R.layout.item_anime, parent, false)
         )
 
     override fun getItemCount(): Int = items.size

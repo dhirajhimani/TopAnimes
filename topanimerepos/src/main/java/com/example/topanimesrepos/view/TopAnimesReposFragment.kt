@@ -1,5 +1,6 @@
 package com.example.topanimesrepos.view
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
@@ -7,6 +8,7 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -33,6 +35,14 @@ class TopAnimesReposFragment : DaggerFragment() {
 
     private var isButtonEnable: Boolean = true
 
+    private val calculator = GridPositionCalculator(0)
+
+    @RecyclerView.Orientation
+    private var orientation = RecyclerView.VERTICAL
+
+    private var itemSpacing: Int = 0
+    private val spanCount: Int = GridPositionCalculator.fullSpanSize
+
     private val connectivitySnackbar: Snackbar by lazy {
         Snackbar.make(githubReposRecyclerView, "No Network", Snackbar.LENGTH_SHORT)
     }
@@ -56,9 +66,16 @@ class TopAnimesReposFragment : DaggerFragment() {
             retryButton = view.findViewById(R.id.retry)
             noNetworkBanner = view.findViewById(R.id.no_network_banner)
             whatWentWrong = view.findViewById(R.id.what_went_wrong)
+            orientation = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+                RecyclerView.HORIZONTAL
+            else
+                RecyclerView.VERTICAL
             githubReposRecyclerView.apply {
                 adapter = topAnimesReposAdapter
-                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                layoutManager = GridLayoutManager(context, spanCount, orientation, false).apply {
+                    spanSizeLookup = calculator
+                }
+                addItemDecoration(TopAnimesItemDecoration(orientation, itemSpacing, calculator))
             }
             retryButton.setOnClickListener {
                 topAnimesReposViewModel.load()
