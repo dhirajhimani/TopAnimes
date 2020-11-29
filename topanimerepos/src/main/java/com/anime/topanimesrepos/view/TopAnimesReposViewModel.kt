@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.anime.core.connectivity.ConnectivityLiveData
+import com.anime.core.connectivity.ConnectivityState
 import com.anime.topanimesrepos.entity.TopAnimesReposState
 import com.anime.core.providers.DataProvider
 import com.anime.topanimesrepos.di.TopAnimesReposModule
@@ -14,7 +15,7 @@ import kotlin.coroutines.CoroutineContext
 
 class TopAnimesReposViewModel @Inject constructor(
     @Named(TopAnimesReposModule.ENTITIES) private val topAnimesReposProvider: DataProvider<TopAnimesReposState>,
-    val connectivityLiveData: ConnectivityLiveData,
+    val connectivityLiveData: MutableLiveData<ConnectivityState> = MutableLiveData(),
     private val mutableLiveData: MutableLiveData<TopAnimesReposViewState> = MutableLiveData()
 ) : ViewModel(), CoroutineScope {
 

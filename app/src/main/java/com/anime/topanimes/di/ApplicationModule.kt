@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import androidx.lifecycle.MutableLiveData
 import com.anime.core.connectivity.ConnectivityLiveData
+import com.anime.core.connectivity.ConnectivityState
 import com.anime.topanimesrepos.view.TopAnimesReposViewState
 import com.anime.topanimes.TopAnimesApplication
 import dagger.Module
@@ -28,7 +29,7 @@ object ApplicationModule {
     @Provides
     @JvmStatic
     @Singleton
-    fun providesConnectivityLiveData(app: Application): ConnectivityLiveData =
+    fun providesConnectivityLiveData(app: Application): MutableLiveData<ConnectivityState> =
         ConnectivityLiveData(app)
 
     @Provides
