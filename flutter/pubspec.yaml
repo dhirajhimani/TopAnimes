@@ -48,6 +48,8 @@ dev_dependencies:
   # Testing
   bloc_test: ^9.1.7
   mocktail: ^1.0.4
+  integration_test:
+    sdk: flutter
   
   # Code Generation
   build_runner: ^2.4.13
