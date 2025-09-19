@@ -1,44 +1,119 @@
 import 'package:dio/dio.dart';
-import '../constants/api_constants.dart';
+import '../config/app_config.dart';
 
-/// Network client for making HTTP requests
+/// Network client for making HTTP requests with debug capabilities
 class NetworkClient {
   late final Dio _dio;
   
-  /// Creates a [NetworkClient] with default configuration
+  /// Creates a [NetworkClient] with enhanced configuration
   NetworkClient() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: ApiConstants.baseUrl,
-        connectTimeout: Duration(milliseconds: ApiConstants.connectionTimeout),
-        receiveTimeout: Duration(milliseconds: ApiConstants.receiveTimeout),
+        connectTimeout: AppConfig.connectionTimeout,
+        receiveTimeout: AppConfig.receiveTimeout,
+        sendTimeout: AppConfig.sendTimeout,
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+          'User-Agent': 'OtakuHubLite/1.0',
         },
       ),
     );
     
-    _dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-      logPrint: (object) {
-        // In debug mode, print network logs
-        // ignore: avoid_print
-        print(object);
-      },
-    ));
+    // Add logging interceptor based on configuration
+    if (AppConfig.enableApiLogging) {
+      _dio.interceptors.add(
+        LogInterceptor(
+          requestBody: true,
+          responseBody: true,
+          requestHeader: AppConfig.isDebug,
+          responseHeader: AppConfig.isDebug,
+          error: true,
+          logPrint: (log) {
+            if (AppConfig.isDebug) {
+              // ignore: avoid_print
+              print('🌐 API: $log');
+            }
+          },
+        ),
+      );
+    }
+    
+    // Add timing interceptor
+    if (AppConfig.showApiTiming) {
+      _dio.interceptors.add(
+        InterceptorsWrapper(
+          onRequest: (options, handler) {
+            options.extra['startTime'] = DateTime.now().millisecondsSinceEpoch;
+            if (AppConfig.isDebug) {
+              // ignore: avoid_print
+              print('🚀 API Request: ${options.method} ${options.uri}');
+            }
+            handler.next(options);
+          },
+          onResponse: (response, handler) {
+            final startTime = response.requestOptions.extra['startTime'] as int?;
+            if (startTime != null && AppConfig.isDebug) {
+              final duration = DateTime.now().millisecondsSinceEpoch - startTime;
+              // ignore: avoid_print
+              print('✅ API Response: ${response.statusCode} in ${duration}ms');
+            }
+            handler.next(response);
+          },
+          onError: (error, handler) {
+            final startTime = error.requestOptions.extra['startTime'] as int?;
+            if (startTime != null && AppConfig.isDebug) {
+              final duration = DateTime.now().millisecondsSinceEpoch - startTime;
+              // ignore: avoid_print
+              print('❌ API Error: ${error.response?.statusCode} in ${duration}ms - ${error.message}');
+            }
+            handler.next(error);
+          },
+        ),
+      );
+    }
   }
   
-  /// Makes a GET request to the specified endpoint
+  /// Makes a GET request to the specified URL
   Future<Response<T>> get<T>(
-    String endpoint, {
+    String url, {
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
   }) async {
+    if (AppConfig.isDebug) {
+      // ignore: avoid_print
+      print('📱 GET Request: $url');
+      if (queryParameters != null) {
+        // ignore: avoid_print
+        print('📝 Query Params: $queryParameters');
+      }
+    }
+    
     return _dio.get<T>(
-      endpoint,
+      url,
+      queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
+    );
+  }
+  
+  /// Makes a POST request to the specified URL
+  Future<Response<T>> post<T>(
+    String url, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+  }) async {
+    if (AppConfig.isDebug) {
+      // ignore: avoid_print
+      print('📱 POST Request: $url');
+    }
+    
+    return _dio.post<T>(
+      url,
+      data: data,
       queryParameters: queryParameters,
       options: options,
       cancelToken: cancelToken,

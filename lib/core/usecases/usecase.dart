@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:equatable/equatable.dart';
 
 import '../error/failures.dart';

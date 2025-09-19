@@ -22,12 +22,12 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
   Future<List<AnimeModel>> getTopAnime() async {
     try {
       final response = await networkClient.get<Map<String, dynamic>>(
-        ApiConstants.topAnimeEndpoint,
+        '${ApiConstants.jikanBaseUrl}${ApiConstants.topAiringAnimeEndpoint}',
       );
       
       if (response.statusCode == 200 && response.data != null) {
         final topAnimeResponse = TopAnimeResponse.fromJson(response.data!);
-        return topAnimeResponse.top;
+        return topAnimeResponse.data;
       } else {
         throw ServerException(
           'Failed to fetch anime data. Status: ${response.statusCode}',

@@ -16,12 +16,13 @@ dependencies:
   
   # Dependency Injection
   get_it: ^7.7.0
+  injectable: ^2.4.4
   
   # Networking
   dio: ^5.7.0
   
   # Functional Programming
-  dartz: ^0.10.1
+  fpdart: ^1.1.0
   
   # Models & Utilities
   equatable: ^2.0.5
@@ -54,6 +55,7 @@ dev_dependencies:
   # Code Generation
   build_runner: ^2.4.13
   json_serializable: ^6.8.0
+  injectable_generator: ^2.6.2
   
   # Linting
   flutter_lints: ^5.0.0

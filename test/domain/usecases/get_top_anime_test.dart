@@ -1,5 +1,5 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:top_anime/core/usecases/usecase.dart';
 import 'package:top_anime/domain/entities/anime.dart';
@@ -24,13 +24,17 @@ void main() {
       url: 'https://test.com',
       imageUrl: 'https://test.com/image.jpg',
       members: 1000,
+      id: 1,
+      synopsis: '',
+      status: '',
     ),
   ];
 
   test('should get anime list from the repository', () async {
     // arrange
-    when(() => mockAnimeRepository.getTopAnime())
-        .thenAnswer((_) async => const Right(tAnimeList));
+    when(
+      () => mockAnimeRepository.getTopAnime(),
+    ).thenAnswer((_) async => const Right(tAnimeList));
 
     // act
     final result = await usecase(NoParams());
