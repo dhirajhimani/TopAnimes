@@ -33,7 +33,7 @@ class TopAnimeApp extends StatelessWidget {
           elevation: 2,
           centerTitle: true,
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           elevation: 4,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -50,7 +50,7 @@ class TopAnimeApp extends StatelessWidget {
           elevation: 2,
           centerTitle: true,
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           elevation: 4,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),

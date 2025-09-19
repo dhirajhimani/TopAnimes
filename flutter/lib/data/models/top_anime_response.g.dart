@@ -14,6 +14,4 @@ TopAnimeResponse _$TopAnimeResponseFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$TopAnimeResponseToJson(TopAnimeResponse instance) =>
-    <String, dynamic>{
-      'top': instance.top,
-    };
+    <String, dynamic>{'top': instance.top};

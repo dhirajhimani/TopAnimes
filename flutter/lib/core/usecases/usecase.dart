@@ -1,13 +1,16 @@
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-/// Abstract base class for all use cases
+import '../error/failures.dart';
+
+/// Base class for use cases
 abstract class UseCase<Type, Params> {
-  /// Executes the use case with the given parameters
-  Future<Type> call(Params params);
+  /// Executes the use case
+  Future<Either<Failure, Type>> call(Params params);
 }
 
-/// Class to represent no parameters for use cases
+/// Parameters for use cases that don't need any
 class NoParams extends Equatable {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
