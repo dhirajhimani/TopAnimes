@@ -19,7 +19,8 @@ MangaModel _$MangaModelFromJson(Map<String, dynamic> json) => MangaModel(
   members: (json['members'] as num).toInt(),
 );
 
-Map<String, dynamic> _$MangaModelToJson(MangaModel instance) => <String, dynamic>{
+Map<String, dynamic> _$MangaModelToJson(MangaModel instance) =>
+    <String, dynamic>{
       'mal_id': instance.id,
       'title': instance.title,
       'url': instance.url,

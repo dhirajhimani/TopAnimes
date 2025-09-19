@@ -38,24 +38,14 @@ Map<String, dynamic> _$LightNovelModelToJson(LightNovelModel instance) =>
       'webUrls': instance.webUrls,
     };
 
-AuthorModel _$AuthorModelFromJson(Map<String, dynamic> json) => AuthorModel(
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-    );
+AuthorModel _$AuthorModelFromJson(Map<String, dynamic> json) =>
+    AuthorModel(id: (json['id'] as num).toInt(), name: json['name'] as String);
 
 Map<String, dynamic> _$AuthorModelToJson(AuthorModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-    };
+    <String, dynamic>{'id': instance.id, 'name': instance.name};
 
-WebUrlModel _$WebUrlModelFromJson(Map<String, dynamic> json) => WebUrlModel(
-      url: json['url'] as String,
-      type: json['type'] as String,
-    );
+WebUrlModel _$WebUrlModelFromJson(Map<String, dynamic> json) =>
+    WebUrlModel(url: json['url'] as String, type: json['type'] as String);
 
 Map<String, dynamic> _$WebUrlModelToJson(WebUrlModel instance) =>
-    <String, dynamic>{
-      'url': instance.url,
-      'type': instance.type,
-    };
+    <String, dynamic>{'url': instance.url, 'type': instance.type};

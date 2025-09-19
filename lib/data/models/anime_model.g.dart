@@ -24,7 +24,8 @@ AnimeModel _$AnimeModelFromJson(Map<String, dynamic> json) => AnimeModel(
   members: (json['members'] as num).toInt(),
 );
 
-Map<String, dynamic> _$AnimeModelToJson(AnimeModel instance) => <String, dynamic>{
+Map<String, dynamic> _$AnimeModelToJson(AnimeModel instance) =>
+    <String, dynamic>{
       'mal_id': instance.id,
       'rank': instance.rank,
       'title': instance.title,
@@ -47,10 +48,8 @@ ImagesModel _$ImagesModelFromJson(Map<String, dynamic> json) => ImagesModel(
       : WebpImagesModel.fromJson(json['webp'] as Map<String, dynamic>),
 );
 
-Map<String, dynamic> _$ImagesModelToJson(ImagesModel instance) => <String, dynamic>{
-      'jpg': instance.jpg,
-      'webp': instance.webp,
-    };
+Map<String, dynamic> _$ImagesModelToJson(ImagesModel instance) =>
+    <String, dynamic>{'jpg': instance.jpg, 'webp': instance.webp};
 
 JpgImagesModel _$JpgImagesModelFromJson(Map<String, dynamic> json) =>
     JpgImagesModel(
