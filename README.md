@@ -1,121 +1,185 @@
-# TopAnimes
-![](media/topanimes_1.jpg)
+# TopAnimes Flutter
 
-# TopAnimes 👨‍💻
+A Flutter application showcasing top anime using Clean Architecture principles, built as a migration from the original Android application.
 
-[![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-![Github Followers](https://img.shields.io/github/followers/dhirajhimani?label=Follow&style=social)
-![GitHub stars](https://img.shields.io/github/stars/dhirajhimani/TopAnimes?style=social)
-![GitHub forks](https://img.shields.io/github/forks/dhirajhimani/TopAnimes?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/dhirajhimani/TopAnimes?style=social)
-![Twitter Follow](https://img.shields.io/twitter/follow/dhirajhimani?label=Follow&style=social)
-[![LinkedIn Follow](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dhirajhimani/)
+## Features
 
-**TopAnimes** is a sample anime Android application 📱 built to demonstrate use of *Modern Android development* tools. Dedicated to all Android Developers with ❤️. 
+- 🎯 **Clean Architecture** - Separated into Data, Domain, and Presentation layers
+- 🔄 **State Management** - Using Cubit from flutter_bloc
+- 💾 **Offline Support** - Local caching with SharedPreferences
+- 🌗 **Dark Theme** - Automatic light/dark theme switching
+- 🔄 **Pull to Refresh** - Refresh anime list with pull-to-refresh gesture
+- 🌐 **External Links** - Tap anime cards to open in browser
+- ⚡ **Modern UI** - Material 3 design with smooth animations
 
-***You can Install and test latest Android app from below 👇***
+## Project Structure
 
-[![TopAnimes App](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/details?id=com.anime.topanimes)
-
-
-## About
-It simply loads **Posts** data from API and stores it in persistence storage (i.e. SQLite Database). Posts will be always loaded from local database. Remote data (from API) and Local data is always synchronized. 
-- This makes it offline capable 😃. 
-- Clean and Simple Material UI.
-- It supports dark theme too 🌗.
-
-*Dummy API is used in this app. JSON response is statically hosted [here](https://api.jikan.moe/v3/top/anime/1/upcoming)*.
-
-## Built With 🛠
-- [Kotlin](https://kotlinlang.org/) - First class and official programming language for Android development.
-- [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - For asynchronous and more..
-- [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) - Collection of libraries that help you design robust, testable, and maintainable apps.
-  - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - Data objects that notify views when the underlying database changes.
-  - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Stores UI-related data that isn't destroyed on UI changes. 
-  - [ViewBinding](https://developer.android.com/topic/libraries/view-binding) - Generates a binding class for each XML layout file present in that module and allows you to more easily write code that interacts with views.
-  - [Room](https://developer.android.com/topic/libraries/architecture/room) - SQLite object mapping library.
-- [Dependency Injection](https://developer.android.com/training/dependency-injection/dagger-android) - 
-  - [Dagger2](https://dagger.dev/dev-guide/android.html) - Standard library to incorporate Dagger dependency injection into an Android application.
-- [Retrofit](https://square.github.io/retrofit/) - A type-safe HTTP client for Android and Java.
-- [Moshi](https://github.com/square/moshi) - A modern JSON library for Kotlin and Java.
-- [Moshi Converter](https://github.com/square/retrofit/tree/master/retrofit-converters/moshi) - A Converter which uses Moshi for serialization to and from JSON.
-- [Glide](https://github.com/bumptech/glide) - An image loading library for Android
-- [Material Components for Android](https://github.com/material-components/material-components-android) - Modular and customizable Material Design UI components for Android.
-
-## Planning to release in next PR
-- [Flow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/) - A cold asynchronous data stream that sequentially emits values and completes normally or with an exception.
-- [Dependency Injection](https://developer.android.com/training/dependency-injection) - 
-  - [Hilt-Dagger](https://dagger.dev/hilt/) - Standard library to incorporate Dagger dependency injection into an Android application.
-  - [Hilt-ViewModel](https://developer.android.com/training/dependency-injection/hilt-jetpack) - DI for injecting `ViewModel`.
-- [Gradle Kotlin DSL](https://docs.gradle.org/current/userguide/kotlin_dsl.html) - For writing Gradle build scripts using Kotlin.
-
-
-**Contributed By:** [Dhiraj Himani](https://github.com/dhirajhimani/)
-
-
-# Package Structure
-    
-    # Root Package
-    .
-    ├── data                # For data handling.
-    │   ├── local           # Local Persistence Database. Room (SQLite) database
-    |   │   ├── dao         # Data Access Object for Room   
-    │   ├── remote          # Remote Data Handlers     
-    |   │   ├── api         # Retrofit API for remote end point.
-    │   └── repository      # Single source of data.
-    |
-    ├── model               # Model classes
-    |
-    ├── di                  # Dependency Injection             
-    │   ├── builder         # Activity Builder
-    │   ├── component       # DI Components       
-    │   └── module          # DI Modules
-    |
-    ├── ui                  # Activity/View layer
-    │   ├── base            # Base View
-    │   ├── main            # Main Screen Activity & ViewModel
-    |   │   ├── adapter     # Adapter for RecyclerView
-    |   │   └── viewmodel   # ViewHolder for RecyclerView   
-    │   └── details         # Detail Screen Activity and ViewModel
-    |
-    └── utils               # Utility Classes / Kotlin extensions
-
-For More details you can view the (structure.txt)
+```
+lib/
+├── core/                       # Core functionality
+│   ├── constants/             # App constants (API URLs, storage keys)
+│   ├── error/                 # Error handling (failures, exceptions)
+│   ├── network/               # Network client configuration
+│   └── usecases/              # Base use case classes
+├── data/                      # Data layer
+│   ├── datasources/           # Remote and local data sources
+│   ├── models/                # Data Transfer Objects (DTOs)
+│   └── repositories/          # Repository implementations
+├── domain/                    # Domain layer (pure Dart)
+│   ├── entities/              # Business entities
+│   ├── repositories/          # Repository contracts
+│   └── usecases/              # Business logic use cases
+├── presentation/              # Presentation layer
+│   ├── cubit/                 # State management (Cubit & States)
+│   ├── pages/                 # Screen widgets
+│   └── widgets/               # Reusable UI components
+└── injection_container.dart   # Dependency injection setup
+```
 
 ## Architecture
-This app uses [***MVVM (Model View View-Model)***](https://developer.android.com/jetpack/docs/guide#recommended-app-arch) architecture.
 
-![](https://developer.android.com/topic/libraries/architecture/images/final-architecture.png)
+This application follows **Clean Architecture** principles:
 
+### Data Layer
+- **AnimeRemoteDataSource**: Fetches data from Jikan API
+- **AnimeLocalDataSource**: Handles local caching with SharedPreferences
+- **AnimeRepositoryImpl**: Implements repository contract, handles data flow
 
-## Contribute
-If you want to contribute to this library, you're always welcome!
+### Domain Layer
+- **Anime**: Core business entity (pure Dart)
+- **AnimeRepository**: Abstract repository contract
+- **GetTopAnime**: Use case for fetching anime data
 
-## Contact
-If you need any help, you can connect with me.
+### Presentation Layer
+- **AnimeCubit**: Manages UI state using Cubit pattern
+- **AnimeListPage**: Main screen displaying anime grid
+- **AnimeCard**: Reusable widget for anime items
 
-Visit:- [dhirajhimani](https://www.linkedin.com/in/dhirajhimani/)
+## API Integration
+
+The app integrates with the [Jikan API](https://api.jikan.moe/v3/top/anime/1/upcoming) to fetch top upcoming anime data.
+
+## Dependencies
+
+### Core Dependencies
+- **flutter_bloc**: State management with Cubit
+- **get_it**: Dependency injection
+- **dio**: HTTP client for API calls
+- **dartz**: Functional programming (Either type)
+- **equatable**: Value equality comparison
+
+### UI Dependencies
+- **cached_network_image**: Image caching and loading
+- **shimmer**: Loading placeholder animations
+- **url_launcher**: External link handling
+
+### Development Dependencies
+- **bloc_test**: Testing Cubit state changes
+- **mocktail**: Mocking for unit tests
+- **build_runner**: Code generation
+- **json_serializable**: JSON serialization
+
+## Getting Started
+
+### Prerequisites
+- Flutter SDK (3.8.1 or higher)
+- Dart SDK (3.8.1 or higher)
+
+### Installation
+
+1. Clone the repository
+2. Navigate to the flutter directory:
+   ```bash
+   cd flutter
+   ```
+
+3. Install dependencies:
+   ```bash
+   flutter pub get
+   ```
+
+4. Generate code (if needed):
+   ```bash
+   flutter packages pub run build_runner build
+   ```
+
+5. Run the app:
+   ```bash
+   flutter run
+   ```
+
+## Testing
+
+### Run Unit Tests
+```bash
+flutter test
+```
+
+### Run Widget Tests
+```bash
+flutter test test/widget_test.dart
+```
+
+### Run All Tests with Coverage
+```bash
+flutter test --coverage
+```
+
+## State Management
+
+The app uses **Cubit** for state management with the following states:
+
+- **AnimeInitial**: Initial state when app starts
+- **AnimeLoading**: Data is being fetched
+- **AnimeLoaded**: Data successfully loaded
+- **AnimeError**: Error occurred during data fetching
+
+## Offline Capability
+
+The app provides offline functionality through:
+
+1. **Cache Strategy**: Data is cached locally using SharedPreferences
+2. **Cache Validity**: Cache expires after 24 hours
+3. **Fallback**: If network fails, app shows cached data
+4. **Refresh**: Pull-to-refresh forces fresh data fetch
+
+## Comparison with Android Version
+
+| Android (Kotlin) | Flutter (Dart) |
+|-----------------|----------------|
+| MVVM + Repository | Clean Architecture |
+| ViewModel | Cubit |
+| LiveData | Cubit States |
+| Retrofit | Dio |
+| Room Database | SharedPreferences |
+| RecyclerView | GridView.builder |
+| Glide | CachedNetworkImage |
+| Dagger | get_it |
+
+## Build & Deployment
+
+### Android APK
+```bash
+flutter build apk --release
+```
+
+### iOS IPA
+```bash
+flutter build ios --release
+```
+
+### Web
+```bash
+flutter build web --release
+```
+
+## Contributing
+
+1. Follow the existing code structure and naming conventions
+2. Write tests for new features
+3. Ensure code passes linting checks
+4. Update documentation for significant changes
 
 ## License
-```MIT License
 
-Copyright (c) 2020 Dhiraj Himani
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+This project is licensed under the MIT License - see the original project's LICENSE file for details.
