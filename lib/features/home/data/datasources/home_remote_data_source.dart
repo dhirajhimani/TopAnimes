@@ -1,3 +1,6 @@
+import 'package:top_anime/data/models/anime_model.dart';
+import 'package:top_anime/data/models/manga_model.dart';
+
 import '../../../core/constants/api_constants.dart';
 import '../../../core/error/exceptions.dart';
 import '../../../core/network/network_client.dart';

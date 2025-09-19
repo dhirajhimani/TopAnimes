@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fpdart/fpdart.dart';
+
 import '../../../../core/usecases/usecase.dart';
 import '../../domain/usecases/get_top_airing_anime.dart';
 import '../../domain/usecases/get_top_manga.dart';

@@ -5,7 +5,7 @@ import 'package:top_anime/main.dart';
 void main() {
   testWidgets('TopAnimeApp widget test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const TopAnimeApp());
+    await tester.pumpWidget(const OtakuHubLiteApp());
 
     // Verify that the app title is shown
     expect(find.text('TopAnimes'), findsOneWidget);
