@@ -2,37 +2,37 @@ import 'package:equatable/equatable.dart';
 
 /// Domain entity representing a manga
 class Manga extends Equatable {
-  /// Unique ID of the manga
+  /// Unique identifier for the manga from MyAnimeList
   final int id;
   
-  /// Title of the manga
+  /// Official title of the manga
   final String title;
   
-  /// Web URL of the manga
+  /// Official web URL for the manga on MyAnimeList
   final String url;
   
-  /// Image URL of the manga
+  /// URL for the manga's cover/poster image
   final String imageUrl;
   
-  /// Synopsis of the manga
+  /// Plot synopsis or description of the manga
   final String synopsis;
   
-  /// Score/rating of the manga
+  /// User rating score out of 10 (optional)
   final double? score;
   
-  /// Publication status of the manga
+  /// Current publication status (e.g., "Publishing", "Finished")
   final String status;
   
-  /// Number of chapters
+  /// Total number of chapters (optional, may be unknown for ongoing series)
   final int? chapters;
   
-  /// Number of volumes
+  /// Total number of volumes (optional, may be unknown for ongoing series)
   final int? volumes;
   
-  /// Number of members who have this manga in their list
+  /// Number of MyAnimeList members who have this manga in their list
   final int members;
   
-  /// Creates a [Manga] entity
+  /// Creates a [Manga] entity with all required and optional parameters
   const Manga({
     required this.id,
     required this.title,
