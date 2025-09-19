@@ -8,6 +8,14 @@ import 'domain/repositories/anime_repository.dart';
 import 'domain/usecases/get_top_anime.dart';
 import 'presentation/cubit/anime_cubit.dart';
 
+// Home feature dependencies
+import 'features/home/data/datasources/home_remote_data_source.dart';
+import 'features/home/data/repositories/home_repository_impl.dart';
+import 'features/home/domain/repositories/home_repository.dart';
+import 'features/home/domain/usecases/get_top_airing_anime.dart';
+import 'features/home/domain/usecases/get_top_manga.dart';
+import 'features/home/presentation/bloc/home_bloc.dart';
+
 /// Service locator instance
 final sl = GetIt.instance;
 
@@ -20,7 +28,7 @@ Future<void> initializeDependencies() async {
   // Core
   sl.registerLazySingleton(() => NetworkClient());
   
-  // Data sources
+  // Legacy data sources (keeping for backward compatibility)
   sl.registerLazySingleton<AnimeRemoteDataSource>(
     () => AnimeRemoteDataSourceImpl(networkClient: sl()),
   );
@@ -29,7 +37,7 @@ Future<void> initializeDependencies() async {
     () => AnimeLocalDataSourceImpl(sharedPreferences: sl()),
   );
   
-  // Repository
+  // Legacy repository
   sl.registerLazySingleton<AnimeRepository>(
     () => AnimeRepositoryImpl(
       remoteDataSource: sl(),
@@ -37,9 +45,26 @@ Future<void> initializeDependencies() async {
     ),
   );
   
-  // Use cases
+  // Legacy use cases
   sl.registerLazySingleton(() => GetTopAnime(sl()));
   
-  // Cubit
+  // Legacy cubit
   sl.registerFactory(() => AnimeCubit(getTopAnime: sl()));
+  
+  // Home feature dependencies
+  sl.registerLazySingleton<HomeRemoteDataSource>(
+    () => HomeRemoteDataSourceImpl(networkClient: sl()),
+  );
+  
+  sl.registerLazySingleton<HomeRepository>(
+    () => HomeRepositoryImpl(remoteDataSource: sl()),
+  );
+  
+  sl.registerLazySingleton(() => GetTopAiringAnime(sl<HomeRepository>()));
+  sl.registerLazySingleton(() => GetTopManga(sl<HomeRepository>()));
+  
+  sl.registerFactory(() => HomeBloc(
+    getTopAiringAnime: sl(),
+    getTopManga: sl(),
+  ));
 }

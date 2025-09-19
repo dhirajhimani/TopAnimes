@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'core/router/app_router.dart';
 import 'injection_container.dart';
-import 'presentation/cubit/anime_cubit.dart';
-import 'presentation/pages/anime_list_page.dart';
+import 'features/home/presentation/bloc/home_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,57 +10,74 @@ void main() async {
   // Initialize dependencies
   await initializeDependencies();
   
-  runApp(const TopAnimeApp());
+  runApp(const OtakuHubLiteApp());
 }
 
 /// Root application widget
-class TopAnimeApp extends StatelessWidget {
-  /// Creates a [TopAnimeApp]
-  const TopAnimeApp({super.key});
+class OtakuHubLiteApp extends StatelessWidget {
+  /// Creates an [OtakuHubLiteApp]
+  const OtakuHubLiteApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'TopAnimes',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6750A4),
-          brightness: Brightness.light,
+    return MultiBlocProvider(
+      providers: [
+        // Provide global BLoCs here if needed
+        BlocProvider(
+          create: (context) => sl<HomeBloc>(),
         ),
-        useMaterial3: true,
-        appBarTheme: const AppBarTheme(
-          elevation: 2,
-          centerTitle: true,
-        ),
-        cardTheme: CardThemeData(
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+      ],
+      child: MaterialApp.router(
+        title: 'Otaku Hub Lite',
+        debugShowCheckedModeBanner: false,
+        routerConfig: AppRouter.createRouter(),
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFF6750A4),
+            brightness: Brightness.light,
+          ),
+          useMaterial3: true,
+          appBarTheme: const AppBarTheme(
+            elevation: 2,
+            centerTitle: true,
+          ),
+          cardTheme: CardThemeData(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            filled: true,
           ),
         ),
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6750A4),
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-        appBarTheme: const AppBarTheme(
-          elevation: 2,
-          centerTitle: true,
-        ),
-        cardTheme: CardThemeData(
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+        darkTheme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFF6750A4),
+            brightness: Brightness.dark,
+          ),
+          useMaterial3: true,
+          appBarTheme: const AppBarTheme(
+            elevation: 2,
+            centerTitle: true,
+          ),
+          cardTheme: CardThemeData(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            filled: true,
           ),
         ),
-      ),
-      themeMode: ThemeMode.system,
-      home: BlocProvider<AnimeCubit>(
-        create: (context) => sl<AnimeCubit>(),
-        child: const AnimeListPage(),
+        themeMode: ThemeMode.system,
       ),
     );
   }
