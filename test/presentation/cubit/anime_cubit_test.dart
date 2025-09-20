@@ -5,8 +5,8 @@ import 'package:mocktail/mocktail.dart';
 import 'package:top_anime/core/error/failures.dart';
 import 'package:top_anime/domain/entities/anime.dart';
 import 'package:top_anime/domain/usecases/get_top_anime.dart';
-import 'package:top_anime/presentation/cubit/anime_cubit.dart';
-import 'package:top_anime/presentation/cubit/anime_state.dart';
+import 'package:top_anime/features/anime/presentation/bloc/anime_cubit.dart';
+import 'package:top_anime/features/anime/presentation/bloc/anime_state.dart';
 
 class MockGetTopAnime extends Mock implements GetTopAnime {}
 

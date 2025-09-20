@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../domain/entities/content.dart';
+import '../../../favorites/presentation/bloc/favorites_bloc.dart';
 import '../bloc/detail_bloc.dart';
 import '../bloc/detail_event.dart';
 import '../bloc/detail_state.dart';
@@ -13,42 +15,121 @@ import '../widgets/metadata_chip.dart';
 class DetailPage extends StatelessWidget {
   /// Content to display details for
   final Content content;
-  
+
   /// Creates a [DetailPage]
-  const DetailPage({
-    super.key,
-    required this.content,
-  });
-  
+  const DetailPage({super.key, required this.content});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => DetailBloc()..add(LoadContentDetail(content)),
+      create: (context) =>
+          DetailBloc(favoritesBloc: context.read<FavoritesBloc>())
+            ..add(LoadContentDetail(content)),
       child: BlocBuilder<DetailBloc, DetailState>(
         builder: (context, state) {
-          return Scaffold(
-            body: CustomScrollView(
-              slivers: [
-                _buildSliverAppBar(context, state),
-                SliverToBoxAdapter(
-                  child: _buildContent(context, state),
-                ),
-              ],
+          // Get dynamic theme based on extracted color
+          final theme = _buildAdaptiveTheme(context, state);
+
+          return Theme(
+            data: theme,
+            child: Scaffold(
+              body: CustomScrollView(
+                slivers: [
+                  _buildSliverAppBar(context, state),
+                  SliverToBoxAdapter(child: _buildContent(context, state)),
+                ],
+              ),
+              floatingActionButton: _buildFloatingActionButtons(context, state),
             ),
-            floatingActionButton: _buildFloatingActionButton(context, state),
           );
         },
       ),
     );
   }
-  
+
+  /// Builds adaptive theme based on dominant color
+  ThemeData _buildAdaptiveTheme(BuildContext context, DetailState state) {
+    final baseTheme = Theme.of(context);
+
+    if (state is DetailLoaded && state.dominantColor != null) {
+      final dominantColor = state.dominantColor!;
+
+      // Create a color scheme from the dominant color
+      final colorScheme = ColorScheme.fromSeed(
+        seedColor: dominantColor,
+        brightness: baseTheme.brightness,
+      );
+
+      return baseTheme.copyWith(
+        colorScheme: colorScheme,
+        appBarTheme: baseTheme.appBarTheme.copyWith(
+          backgroundColor: colorScheme.surface,
+          foregroundColor: colorScheme.onSurface,
+        ),
+        floatingActionButtonTheme: baseTheme.floatingActionButtonTheme.copyWith(
+          backgroundColor: colorScheme.primary,
+          foregroundColor: colorScheme.onPrimary,
+        ),
+      );
+    }
+
+    return baseTheme;
+  }
+
   /// Builds the sliver app bar with image background
   Widget _buildSliverAppBar(BuildContext context, DetailState state) {
     final currentContent = _getCurrentContent(state);
-    
+
     return SliverAppBar(
       expandedHeight: 300,
       pinned: true,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () async {
+          if (currentContent.type == ContentType.anime) {
+            context.go('/anime', extra: currentContent);
+            return;
+          }
+          if (currentContent.type == ContentType.manga) {
+            context.go('/manga', extra: currentContent);
+            return;
+          }
+          if (currentContent.type == ContentType.lightNovel) {
+            context.go('/light_novel', extra: currentContent);
+            return;
+          }
+        },
+      ),
+      actions: [
+        // Color indicator when dominant color is extracted
+        if (state is DetailLoaded && state.dominantColor != null)
+          Container(
+            margin: const EdgeInsets.all(8),
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              color: state.dominantColor,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white, width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.3),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+          ),
+        if (state is DetailLoaded)
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              context.read<DetailBloc>().add(
+                RefreshContentDetail(state.content),
+              );
+            },
+          ),
+      ],
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           fit: StackFit.expand,
@@ -58,9 +139,7 @@ class DetailPage extends StatelessWidget {
               fit: BoxFit.cover,
               placeholder: (context, url) => Container(
                 color: Colors.grey[300],
-                child: const Center(
-                  child: CircularProgressIndicator(),
-                ),
+                child: const Center(child: CircularProgressIndicator()),
               ),
               errorWidget: (context, url, error) => Container(
                 color: Colors.grey[300],
@@ -75,10 +154,7 @@ class DetailPage extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       _getContentTypeLabel(currentContent.type),
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 16,
-                      ),
+                      style: TextStyle(color: Colors.grey[600], fontSize: 16),
                     ),
                   ],
                 ),
@@ -90,28 +166,16 @@ class DetailPage extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black.withOpacity(0.7),
-                  ],
+                  colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
                 ),
               ),
             ),
           ],
         ),
       ),
-      actions: [
-        if (state is DetailLoaded)
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              context.read<DetailBloc>().add(RefreshContentDetail(state.content));
-            },
-          ),
-      ],
     );
   }
-  
+
   /// Builds the main content area
   Widget _buildContent(BuildContext context, DetailState state) {
     if (state is DetailLoading) {
@@ -122,17 +186,18 @@ class DetailPage extends StatelessWidget {
       return _ErrorWidget(
         content: state.content,
         message: state.message,
-        onRetry: () => context.read<DetailBloc>().add(LoadContentDetail(state.content)),
+        onRetry: () =>
+            context.read<DetailBloc>().add(LoadContentDetail(state.content)),
       );
     }
-    
+
     return _buildDetailContent(context, content);
   }
-  
+
   /// Builds the detailed content section
   Widget _buildDetailContent(BuildContext context, Content content) {
     final theme = Theme.of(context);
-    
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -170,18 +235,14 @@ class DetailPage extends StatelessWidget {
               ),
             ],
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Score and status
           Row(
             children: [
               if (content.score != null) ...[
-                Icon(
-                  Icons.star,
-                  color: Colors.amber[600],
-                  size: 20,
-                ),
+                Icon(Icons.star, color: Colors.amber[600], size: 20),
                 const SizedBox(width: 4),
                 Text(
                   content.score!.toStringAsFixed(1),
@@ -192,10 +253,7 @@ class DetailPage extends StatelessWidget {
                 const SizedBox(width: 16),
               ],
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 4,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(12),
@@ -209,115 +267,123 @@ class DetailPage extends StatelessWidget {
               ),
             ],
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Metadata chips
           _buildMetadataChips(content),
-          
+
           const SizedBox(height: 24),
-          
+
           // Synopsis
           DetailInfoCard(
             title: 'Synopsis',
             icon: Icons.description_outlined,
             child: Text(
-              content.synopsis.isNotEmpty 
-                  ? content.synopsis 
+              content.synopsis.isNotEmpty
+                  ? content.synopsis
                   : 'No synopsis available.',
-              style: theme.textTheme.bodyLarge?.copyWith(
-                height: 1.5,
-              ),
+              style: theme.textTheme.bodyLarge?.copyWith(height: 1.5),
             ),
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Additional information based on content type
           _buildTypeSpecificInfo(context, content),
-          
+
           const SizedBox(height: 32),
         ],
       ),
     );
   }
-  
+
   /// Builds metadata chips
   Widget _buildMetadataChips(Content content) {
     final metadata = content.metadata;
     final chips = <Widget>[];
-    
+
     // Common metadata
     if (content.members > 0) {
-      chips.add(MetadataChip(
-        label: '${_formatNumber(content.members)} members',
-        icon: Icons.people,
-      ));
+      chips.add(
+        MetadataChip(
+          label: '${_formatNumber(content.members)} members',
+          icon: Icons.people,
+        ),
+      );
     }
-    
+
     // Type-specific metadata
     switch (content.type) {
       case ContentType.anime:
         if (metadata['episodes'] != null) {
-          chips.add(MetadataChip(
-            label: '${metadata['episodes']} episodes',
-            icon: Icons.play_circle_outline,
-          ));
+          chips.add(
+            MetadataChip(
+              label: '${metadata['episodes']} episodes',
+              icon: Icons.play_circle_outline,
+            ),
+          );
         }
         if (metadata['season'] != null) {
-          chips.add(MetadataChip(
-            label: metadata['season'] as String,
-            icon: Icons.calendar_today,
-          ));
+          chips.add(
+            MetadataChip(
+              label: metadata['season'] as String,
+              icon: Icons.calendar_today,
+            ),
+          );
         }
         break;
-      
+
       case ContentType.manga:
         if (metadata['volumes'] != null) {
-          chips.add(MetadataChip(
-            label: '${metadata['volumes']} volumes',
-            icon: Icons.book,
-          ));
+          chips.add(
+            MetadataChip(
+              label: '${metadata['volumes']} volumes',
+              icon: Icons.book,
+            ),
+          );
         }
         if (metadata['chapters'] != null) {
-          chips.add(MetadataChip(
-            label: '${metadata['chapters']} chapters',
-            icon: Icons.article,
-          ));
+          chips.add(
+            MetadataChip(
+              label: '${metadata['chapters']} chapters',
+              icon: Icons.article,
+            ),
+          );
         }
         break;
-      
+
       case ContentType.lightNovel:
         if (metadata['volumes'] != null) {
-          chips.add(MetadataChip(
-            label: '${metadata['volumes']} volumes',
-            icon: Icons.menu_book,
-          ));
+          chips.add(
+            MetadataChip(
+              label: '${metadata['volumes']} volumes',
+              icon: Icons.menu_book,
+            ),
+          );
         }
         if (metadata['language'] != null) {
-          chips.add(MetadataChip(
-            label: metadata['language'] as String,
-            icon: Icons.language,
-          ));
+          chips.add(
+            MetadataChip(
+              label: metadata['language'] as String,
+              icon: Icons.language,
+            ),
+          );
         }
         break;
     }
-    
+
     if (chips.isEmpty) {
       return const SizedBox.shrink();
     }
-    
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      children: chips,
-    );
+
+    return Wrap(spacing: 8, runSpacing: 8, children: chips);
   }
-  
+
   /// Builds type-specific information
   Widget _buildTypeSpecificInfo(BuildContext context, Content content) {
     final metadata = content.metadata;
-    
+
     switch (content.type) {
       case ContentType.anime:
         if (metadata['broadcast'] != null) {
@@ -325,13 +391,13 @@ class DetailPage extends StatelessWidget {
             title: 'Broadcast',
             icon: Icons.tv,
             child: Text(
-              metadata['broadcast']as String,
+              metadata['broadcast'] as String,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           );
         }
         break;
-      
+
       case ContentType.lightNovel:
         var metadataAuthors = metadata['authors'] as List<dynamic>?;
         if (metadataAuthors != null && metadataAuthors.isNotEmpty) {
@@ -346,30 +412,50 @@ class DetailPage extends StatelessWidget {
           );
         }
         break;
-      
+
       case ContentType.manga:
         // Could add publisher, demographic, etc.
         break;
     }
-    
+
     return const SizedBox.shrink();
   }
-  
-  /// Builds floating action button
-  Widget? _buildFloatingActionButton(BuildContext context, DetailState state) {
+
+  /// Builds floating action buttons
+  Widget? _buildFloatingActionButtons(BuildContext context, DetailState state) {
     final currentContent = _getCurrentContent(state);
-    
-    if (currentContent.url.isEmpty) {
-      return null;
-    }
-    
-    return FloatingActionButton.extended(
-      onPressed: () => _openUrl(context, currentContent.url),
-      icon: const Icon(Icons.open_in_new),
-      label: const Text('View on Web'),
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Favorite button
+        if (state is DetailLoaded)
+          FloatingActionButton(
+            heroTag: "favorite",
+            onPressed: () {
+              context.read<DetailBloc>().add(ToggleFavorite(currentContent));
+            },
+            child: Icon(
+              state.isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: state.isFavorite ? Colors.red : null,
+            ),
+          ),
+
+        if (state is DetailLoaded && currentContent.url.isNotEmpty)
+          const SizedBox(height: 16),
+
+        // View on web button
+        if (currentContent.url.isNotEmpty)
+          FloatingActionButton.extended(
+            heroTag: "view_web",
+            onPressed: () => _openUrl(context, currentContent.url),
+            icon: const Icon(Icons.open_in_new),
+            label: const Text('View on Web'),
+          ),
+      ],
     );
   }
-  
+
   /// Gets the current content based on state
   Content _getCurrentContent(DetailState state) {
     if (state is DetailLoaded) {
@@ -381,7 +467,7 @@ class DetailPage extends StatelessWidget {
     }
     return content;
   }
-  
+
   /// Opens URL in browser
   Future<void> _openUrl(BuildContext context, String url) async {
     try {
@@ -395,19 +481,16 @@ class DetailPage extends StatelessWidget {
       _showSnackBar(context, 'Error opening link');
     }
   }
-  
+
   /// Shows a snackbar message
   void _showSnackBar(BuildContext context, String message) {
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
-          duration: const Duration(seconds: 2),
-        ),
+        SnackBar(content: Text(message), duration: const Duration(seconds: 2)),
       );
     }
   }
-  
+
   /// Gets the appropriate icon for content type
   IconData _getContentIcon(ContentType type) {
     switch (type) {
@@ -419,7 +502,7 @@ class DetailPage extends StatelessWidget {
         return Icons.menu_book_outlined;
     }
   }
-  
+
   /// Gets the label for content type
   String _getContentTypeLabel(ContentType type) {
     switch (type) {
@@ -431,7 +514,7 @@ class DetailPage extends StatelessWidget {
         return 'Light Novel';
     }
   }
-  
+
   /// Gets the color for content type
   Color _getContentTypeColor(ContentType type) {
     switch (type) {
@@ -443,7 +526,7 @@ class DetailPage extends StatelessWidget {
         return Colors.purple;
     }
   }
-  
+
   /// Formats numbers for display
   String _formatNumber(int number) {
     if (number >= 1000000) {
@@ -459,7 +542,7 @@ class DetailPage extends StatelessWidget {
 /// Widget displayed while loading detail data
 class _LoadingWidget extends StatelessWidget {
   const _LoadingWidget();
-  
+
   @override
   Widget build(BuildContext context) {
     return const Padding(
@@ -481,33 +564,29 @@ class _LoadingWidget extends StatelessWidget {
 class _ErrorWidget extends StatelessWidget {
   /// Content that failed to load
   final Content content;
-  
+
   /// Error message to display
   final String message;
-  
+
   /// Callback when retry button is pressed
   final VoidCallback? onRetry;
-  
+
   const _ErrorWidget({
     required this.content,
     required this.message,
     this.onRetry,
   });
-  
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return Padding(
       padding: const EdgeInsets.all(32),
       child: Center(
         child: Column(
           children: [
-            Icon(
-              Icons.error_outline,
-              size: 64,
-              color: Colors.red[300],
-            ),
+            Icon(Icons.error_outline, size: 64, color: Colors.red[300]),
             const SizedBox(height: 16),
             Text(
               'Failed to load details',

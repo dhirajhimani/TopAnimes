@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../domain/entities/manga.dart';
+import '../../../../domain/entities/manga.dart';
 
 /// Widget that displays an individual manga item in a card format
 class MangaCard extends StatelessWidget {

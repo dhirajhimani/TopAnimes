@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import '../../domain/entities/anime.dart';
+import '../../../../domain/entities/anime.dart';
 
 /// Widget that displays an individual anime item in a card format
 class AnimeCard extends StatelessWidget {
