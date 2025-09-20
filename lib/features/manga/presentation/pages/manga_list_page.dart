@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:top_anime/features/home/presentation/bloc/home_event.dart';
 import '../../../../domain/entities/content.dart';
 import '../../../home/presentation/bloc/home_bloc.dart';
 import '../../../home/presentation/bloc/home_state.dart';
@@ -43,8 +44,9 @@ class MangaListPage extends StatelessWidget {
             return const _LoadingWidget();
           } else if (state is HomeLoaded) {
             // Filter for manga content from top manga
-            final mangaList = state.topManga.where((content) => content.type == ContentType.manga).toList();
-            
+            // final mangaList = state.topManga.where((content) => content.type == ContentType.manga).toList();
+            final mangaList = state.topManga;
+
             if (mangaList.isEmpty) {
               return const _EmptyStateWidget(
                 icon: Icons.book_outlined,
@@ -69,7 +71,7 @@ class MangaListPage extends StatelessWidget {
                 ),
                 itemCount: mangaList.length,
                 itemBuilder: (context, index) {
-                  final content = mangaList[index];
+                  final content = Content.fromManga(mangaList[index]);
                   return GestureDetector(
                     onTap: () => context.go('/detail', extra: content),
                     child: _buildContentCard(context, content),

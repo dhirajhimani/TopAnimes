@@ -189,10 +189,10 @@ class _PlaceholderPage extends StatelessWidget {
 }
 
 /// Error page for route errors
-class _ErrorPage extends StatelessWidget {
+class _ErrorPageGoHome extends StatelessWidget {
   final String error;
 
-  const _ErrorPage({required this.error});
+  const _ErrorPageGoHome({required this.error});
 
   @override
   Widget build(BuildContext context) {

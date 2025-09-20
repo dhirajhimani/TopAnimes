@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_anime/core/config/app_config.dart';
+import 'package:top_anime/features/home/presentation/bloc/home_bloc.dart';
+import 'package:top_anime/features/home/presentation/bloc/home_event.dart';
 
-import '../../../core/config/app_config.dart';
-import '../../../presentation/cubit/home_cubit.dart';
 
 /// Settings page for debugging and configuration
 class SettingsPage extends StatefulWidget {
@@ -61,9 +62,9 @@ class _SettingsPageState extends State<SettingsPage> {
                       });
                       
                       // Reload home data with new setting
-                      final homeCubit = context.read<HomeCubit?>();
+                      final homeCubit = context.read<HomeBloc?>();
                       if (homeCubit != null) {
-                        await homeCubit.loadHomeData();
+                        homeCubit.add(const LoadHomeData());
                       }
                       
                       if (mounted) {

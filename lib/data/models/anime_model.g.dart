@@ -7,20 +7,21 @@ part of 'anime_model.dart';
 // **************************************************************************
 
 AnimeModel _$AnimeModelFromJson(Map<String, dynamic> json) => AnimeModel(
-  id: (json['mal_id'] as num?)?.toInt() ?? 0,
-  rank: (json['rank'] as num?)?.toInt() ?? 0,
-  title: json['title'] as String? ?? '',
-  url: json['url'] as String? ?? '',
-  images: ImagesModel.fromJson(json['images'] as Map<String, dynamic>),
-  synopsis: json['synopsis'] as String? ?? '',
-  score: (json['score'] as num?)?.toDouble() ?? 0.0,
-  status: json['status'] as String? ?? '',
-  episodes: (json['episodes'] as num?)?.toInt() ?? 0,
-  season: json['season'] as String? ?? '',
-  year: (json['year'] as num?)?.toInt() ?? 0,
-  broadcast: BroadcastModel.fromJson(json['broadcast'] as Map<String, dynamic>),
-  members: (json['members'] as num?)?.toInt() ?? 0,
-);
+      id: (json['mal_id'] as num?)?.toInt() ?? 0,
+      rank: (json['rank'] as num?)?.toInt() ?? 0,
+      title: json['title'] as String? ?? '',
+      url: json['url'] as String? ?? '',
+      images: ImagesModel.fromJson(json['images'] as Map<String, dynamic>),
+      synopsis: json['synopsis'] as String? ?? '',
+      score: (json['score'] as num?)?.toDouble() ?? 0.0,
+      status: json['status'] as String? ?? '',
+      episodes: (json['episodes'] as num?)?.toInt() ?? 0,
+      season: json['season'] as String? ?? '',
+      year: (json['year'] as num?)?.toInt() ?? 0,
+      broadcast:
+          BroadcastModel.fromJson(json['broadcast'] as Map<String, dynamic>),
+      members: (json['members'] as num?)?.toInt() ?? 0,
+    );
 
 Map<String, dynamic> _$AnimeModelToJson(AnimeModel instance) =>
     <String, dynamic>{
@@ -40,12 +41,15 @@ Map<String, dynamic> _$AnimeModelToJson(AnimeModel instance) =>
     };
 
 ImagesModel _$ImagesModelFromJson(Map<String, dynamic> json) => ImagesModel(
-  jpg: JpgImagesModel.fromJson(json['jpg'] as Map<String, dynamic>),
-  webp: WebpImagesModel.fromJson(json['webp'] as Map<String, dynamic>),
-);
+      jpg: JpgImagesModel.fromJson(json['jpg'] as Map<String, dynamic>),
+      webp: WebpImagesModel.fromJson(json['webp'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$ImagesModelToJson(ImagesModel instance) =>
-    <String, dynamic>{'jpg': instance.jpg, 'webp': instance.webp};
+    <String, dynamic>{
+      'jpg': instance.jpg,
+      'webp': instance.webp,
+    };
 
 JpgImagesModel _$JpgImagesModelFromJson(Map<String, dynamic> json) =>
     JpgImagesModel(

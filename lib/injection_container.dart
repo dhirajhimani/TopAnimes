@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:top_anime/features/anime/presentation/bloc/anime_cubit.dart';
 
 // Core services
 import 'core/network/network_client.dart';
@@ -21,8 +22,6 @@ import 'features/home/domain/usecases/get_top_airing_anime.dart';
 import 'features/home/domain/usecases/get_top_manga.dart';
 
 // Presentation layer
-import 'presentation/cubit/anime_cubit.dart';
-import 'presentation/cubit/home_cubit.dart';
 import 'features/home/presentation/bloc/home_bloc.dart';
 import 'features/favorites/data/datasources/favorites_local_data_source.dart';
 import 'features/favorites/data/repositories/favorites_repository_impl.dart';
@@ -100,7 +99,6 @@ Future<void> initializeDependencies() async {
   sl.registerLazySingleton(() => IsFavorite(sl<FavoritesRepository>()));
   
   // Cubits and BLoCs
-  sl.registerFactory(() => HomeCubit(repository: sl()));
   sl.registerFactory(() => AnimeCubit(getTopAnime: sl()));
   sl.registerFactory(() => HomeBloc(
     getTopAiringAnime: sl(), 

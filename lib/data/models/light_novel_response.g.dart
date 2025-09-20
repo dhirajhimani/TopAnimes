@@ -8,8 +8,7 @@ part of 'light_novel_response.dart';
 
 LightNovelResponse _$LightNovelResponseFromJson(Map<String, dynamic> json) =>
     LightNovelResponse(
-      results:
-          (json['results'] as List<dynamic>?)
+      results: (json['results'] as List<dynamic>?)
               ?.map((e) => LightNovelModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],

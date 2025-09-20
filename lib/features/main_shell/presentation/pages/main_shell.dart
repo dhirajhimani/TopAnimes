@@ -63,7 +63,7 @@ class _MainShellState extends State<MainShell> {
   
   @override
   Widget build(BuildContext context) {
-    final location = GoRouterState.of(context).location;
+    final location = GoRouterState.of(context).uri.toString();
     final currentIndex = _getCurrentIndex(location);
     
     return Scaffold(

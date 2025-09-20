@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:top_anime/features/favorites/presentation/bloc/favorites_event.dart';
+import 'package:top_anime/features/home/presentation/bloc/home_event.dart';
 
 import 'core/config/app_config.dart';
 import 'core/router/app_router.dart';
 import 'injection_container.dart';
-import 'presentation/cubit/home_cubit.dart';
 import 'features/home/presentation/bloc/home_bloc.dart';
 import 'features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'features/favorites/domain/entities/favorite_content.dart';
@@ -33,7 +34,7 @@ class OtakuHubLiteApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => sl<HomeCubit>(),
+          create: (context) => sl<HomeBloc>(),
         ),
         BlocProvider(
           create: (context) => sl<HomeBloc>()..add(const LoadHomeData()),

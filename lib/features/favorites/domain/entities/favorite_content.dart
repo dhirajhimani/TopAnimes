@@ -1,39 +1,39 @@
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
-import '../../../domain/entities/content.dart';
+import 'package:top_anime/domain/entities/content.dart';
 
 /// Entity representing a favorite content item
 class FavoriteContent extends Equatable with HiveObjectMixin {
   /// Unique identifier
   @HiveField(0)
   final int id;
-  
+
   /// Content title
   @HiveField(1)
   final String title;
-  
+
   /// Content type (anime, manga, light novel)
   @HiveField(2)
   final String type;
-  
+
   /// Image URL
   @HiveField(3)
   final String imageUrl;
-  
+
   /// Content URL
   @HiveField(4)
   final String url;
-  
+
   /// Score/rating
   @HiveField(5)
   final double? score;
-  
+
   /// When it was added to favorites
   @HiveField(6)
   final DateTime addedAt;
-  
+
   /// Creates a [FavoriteContent]
-  const FavoriteContent({
+  FavoriteContent({
     required this.id,
     required this.title,
     required this.type,
@@ -42,7 +42,7 @@ class FavoriteContent extends Equatable with HiveObjectMixin {
     this.score,
     required this.addedAt,
   });
-  
+
   /// Creates a [FavoriteContent] from a [Content] entity
   factory FavoriteContent.fromContent(Content content) {
     return FavoriteContent(
@@ -55,7 +55,7 @@ class FavoriteContent extends Equatable with HiveObjectMixin {
       addedAt: DateTime.now(),
     );
   }
-  
+
   /// Converts to [Content] entity
   Content toContent() {
     return Content(
@@ -69,20 +69,14 @@ class FavoriteContent extends Equatable with HiveObjectMixin {
       url: url,
       score: score,
       synopsis: '',
-      metadata: {},
+      metadata: const {},
+      status: '',
+      members: 0,
     );
   }
-  
+
   @override
-  List<Object?> get props => [
-    id,
-    title,
-    type,
-    imageUrl,
-    url,
-    score,
-    addedAt,
-  ];
+  List<Object?> get props => [id, title, type, imageUrl, url, score, addedAt];
 }
 
 /// Hive adapter for FavoriteContent

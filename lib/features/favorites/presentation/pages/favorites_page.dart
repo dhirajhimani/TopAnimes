@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:top_anime/features/favorites/domain/entities/favorite_content.dart';
 import '../bloc/favorites_bloc.dart';
 import '../bloc/favorites_event.dart';
 import '../bloc/favorites_state.dart';
@@ -9,7 +10,7 @@ import '../bloc/favorites_state.dart';
 class FavoritesPage extends StatelessWidget {
   /// Creates a [FavoritesPage]
   const FavoritesPage({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +57,7 @@ class FavoritesPage extends StatelessWidget {
             if (state.favorites.isEmpty) {
               return const _EmptyStateWidget();
             }
-            
+
             return RefreshIndicator(
               onRefresh: () async {
                 context.read<FavoritesBloc>().add(const LoadFavorites());
@@ -73,7 +74,8 @@ class FavoritesPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final favorite = state.favorites[index];
                   return GestureDetector(
-                    onTap: () => context.go('/detail', extra: favorite.toContent()),
+                    onTap: () =>
+                        context.go('/detail', extra: favorite.toContent()),
                     child: _FavoriteCard(
                       favorite: favorite,
                       onRemove: () {
@@ -93,12 +95,13 @@ class FavoritesPage extends StatelessWidget {
                 if (state.favorites.isNotEmpty)
                   GridView.builder(
                     padding: const EdgeInsets.all(8),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.7,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.7,
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8,
+                        ),
                     itemCount: state.favorites.length,
                     itemBuilder: (context, index) {
                       final favorite = state.favorites[index];
@@ -114,7 +117,7 @@ class FavoritesPage extends StatelessWidget {
                   )
                 else
                   const _EmptyStateWidget(),
-                
+
                 // Loading overlay
                 Container(
                   color: Colors.black26,
@@ -144,20 +147,22 @@ class FavoritesPage extends StatelessWidget {
               },
             );
           }
-          
+
           return const _EmptyStateWidget();
         },
       ),
     );
   }
-  
+
   /// Shows confirmation dialog for clearing all favorites
   void _showClearConfirmationDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: const Text('Clear All Favorites'),
-        content: const Text('Are you sure you want to remove all favorites? This action cannot be undone.'),
+        content: const Text(
+          'Are you sure you want to remove all favorites? This action cannot be undone.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
@@ -179,16 +184,13 @@ class FavoritesPage extends StatelessWidget {
 /// Widget for displaying a favorite item card
 class _FavoriteCard extends StatelessWidget {
   /// The favorite content to display
-  final dynamic favorite; // FavoriteContent
-  
+  final FavoriteContent favorite; // FavoriteContent
+
   /// Callback when remove button is pressed
   final VoidCallback onRemove;
-  
-  const _FavoriteCard({
-    required this.favorite,
-    required this.onRemove,
-  });
-  
+
+  const _FavoriteCard({required this.favorite, required this.onRemove});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -203,10 +205,14 @@ class _FavoriteCard extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(12),
+                    ),
                   ),
                   child: ClipRRect(
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(12),
+                    ),
                     child: Image.network(
                       favorite.imageUrl,
                       fit: BoxFit.cover,
@@ -230,7 +236,10 @@ class _FavoriteCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
                           color: _getTypeColor(favorite.type),
                           borderRadius: BorderRadius.circular(8),
@@ -248,9 +257,8 @@ class _FavoriteCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           favorite.title,
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: Theme.of(context).textTheme.titleSmall
+                              ?.copyWith(fontWeight: FontWeight.w600),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -266,9 +274,8 @@ class _FavoriteCard extends StatelessWidget {
                             const SizedBox(width: 4),
                             Text(
                               favorite.score!.toStringAsFixed(1),
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Colors.grey[600],
-                              ),
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(color: Colors.grey[600]),
                             ),
                           ],
                         ),
@@ -287,17 +294,10 @@ class _FavoriteCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
               child: IconButton(
-                icon: const Icon(
-                  Icons.favorite,
-                  color: Colors.red,
-                  size: 20,
-                ),
+                icon: const Icon(Icons.favorite, color: Colors.red, size: 20),
                 onPressed: onRemove,
                 padding: const EdgeInsets.all(4),
-                constraints: const BoxConstraints(
-                  minWidth: 32,
-                  minHeight: 32,
-                ),
+                constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
               ),
             ),
           ),
@@ -305,7 +305,7 @@ class _FavoriteCard extends StatelessWidget {
       ),
     );
   }
-  
+
   IconData _getTypeIcon(String type) {
     switch (type.toLowerCase()) {
       case 'anime':
@@ -318,7 +318,7 @@ class _FavoriteCard extends StatelessWidget {
         return Icons.star;
     }
   }
-  
+
   Color _getTypeColor(String type) {
     switch (type.toLowerCase()) {
       case 'anime':
@@ -336,7 +336,7 @@ class _FavoriteCard extends StatelessWidget {
 /// Loading widget
 class _LoadingWidget extends StatelessWidget {
   const _LoadingWidget();
-  
+
   @override
   Widget build(BuildContext context) {
     return const Center(
@@ -355,7 +355,7 @@ class _LoadingWidget extends StatelessWidget {
 /// Empty state widget
 class _EmptyStateWidget extends StatelessWidget {
   const _EmptyStateWidget();
-  
+
   @override
   Widget build(BuildContext context) {
     return const Center(
@@ -364,27 +364,17 @@ class _EmptyStateWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.favorite_outline,
-              size: 80,
-              color: Colors.red,
-            ),
+            Icon(Icons.favorite_outline, size: 80, color: Colors.red),
             SizedBox(height: 24),
             Text(
               'No Favorites Yet',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16),
             Text(
               'Start adding your favorite anime, manga, and light novels to see them here!',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
+              style: TextStyle(fontSize: 16, color: Colors.grey),
             ),
           ],
         ),
@@ -397,12 +387,9 @@ class _EmptyStateWidget extends StatelessWidget {
 class _ErrorWidget extends StatelessWidget {
   final String message;
   final VoidCallback onRetry;
-  
-  const _ErrorWidget({
-    required this.message,
-    required this.onRetry,
-  });
-  
+
+  const _ErrorWidget({required this.message, required this.onRetry});
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -419,9 +406,9 @@ class _ErrorWidget extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               'Something went wrong',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Text(
@@ -440,3 +427,4 @@ class _ErrorWidget extends StatelessWidget {
       ),
     );
   }
+}

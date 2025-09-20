@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../domain/entities/anime.dart';
+import 'package:top_anime/domain/entities/anime.dart';
 
 /// Base state for anime-related UI states
 abstract class AnimeState extends Equatable {

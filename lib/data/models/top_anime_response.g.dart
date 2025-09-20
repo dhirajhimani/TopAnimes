@@ -8,18 +8,19 @@ part of 'top_anime_response.dart';
 
 TopAnimeResponse _$TopAnimeResponseFromJson(Map<String, dynamic> json) =>
     TopAnimeResponse(
-      data:
-          (json['data'] as List<dynamic>?)
+      data: (json['data'] as List<dynamic>?)
               ?.map((e) => AnimeModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      pagination: PaginationModel.fromJson(
-        json['pagination'] as Map<String, dynamic>,
-      ),
+      pagination:
+          PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$TopAnimeResponseToJson(TopAnimeResponse instance) =>
-    <String, dynamic>{'data': instance.data, 'pagination': instance.pagination};
+    <String, dynamic>{
+      'data': instance.data,
+      'pagination': instance.pagination,
+    };
 
 PaginationModel _$PaginationModelFromJson(Map<String, dynamic> json) =>
     PaginationModel(
@@ -38,10 +39,10 @@ Map<String, dynamic> _$PaginationModelToJson(PaginationModel instance) =>
     };
 
 ItemsModel _$ItemsModelFromJson(Map<String, dynamic> json) => ItemsModel(
-  count: (json['count'] as num?)?.toInt() ?? 0,
-  total: (json['total'] as num?)?.toInt() ?? 0,
-  perPage: (json['per_page'] as num?)?.toInt() ?? 0,
-);
+      count: (json['count'] as num?)?.toInt() ?? 0,
+      total: (json['total'] as num?)?.toInt() ?? 0,
+      perPage: (json['per_page'] as num?)?.toInt() ?? 0,
+    );
 
 Map<String, dynamic> _$ItemsModelToJson(ItemsModel instance) =>
     <String, dynamic>{
