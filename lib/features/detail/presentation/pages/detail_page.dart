@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../domain/entities/content.dart';
 import '../../../favorites/presentation/bloc/favorites_bloc.dart';
@@ -82,6 +83,23 @@ class DetailPage extends StatelessWidget {
     return SliverAppBar(
       expandedHeight: 300,
       pinned: true,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () async {
+          if (currentContent.type == ContentType.anime) {
+            context.go('/anime', extra: currentContent);
+            return;
+          }
+          if (currentContent.type == ContentType.manga) {
+            context.go('/manga', extra: currentContent);
+            return;
+          }
+          if (currentContent.type == ContentType.lightNovel) {
+            context.go('/light_novel', extra: currentContent);
+            return;
+          }
+        },
+      ),
       actions: [
         // Color indicator when dominant color is extracted
         if (state is DetailLoaded && state.dominantColor != null)
