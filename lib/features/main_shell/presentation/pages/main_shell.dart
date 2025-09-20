@@ -17,8 +17,6 @@ class MainShell extends StatefulWidget {
 }
 
 class _MainShellState extends State<MainShell> {
-  int _currentIndex = 0;
-  
   /// Navigation items configuration
   static const List<NavigationItem> _navigationItems = [
     NavigationItem(
@@ -53,20 +51,33 @@ class _MainShellState extends State<MainShell> {
     ),
   ];
   
+  /// Get current index based on location
+  int _getCurrentIndex(String location) {
+    for (int i = 0; i < _navigationItems.length; i++) {
+      if (location.startsWith(_navigationItems[i].route)) {
+        return i;
+      }
+    }
+    return 0; // Default to first tab
+  }
+  
   @override
   Widget build(BuildContext context) {
+    final location = GoRouterState.of(context).location;
+    final currentIndex = _getCurrentIndex(location);
+    
     return Scaffold(
       body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onNavBarTap,
+        currentIndex: currentIndex,
+        onTap: (index) => _onNavBarTap(index),
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Theme.of(context).primaryColor,
         unselectedItemColor: Colors.grey[600],
         selectedFontSize: 12,
         unselectedFontSize: 12,
         items: _navigationItems.map((item) {
-          final isSelected = _navigationItems[_currentIndex] == item;
+          final isSelected = _navigationItems[currentIndex] == item;
           return BottomNavigationBarItem(
             icon: Icon(isSelected ? item.activeIcon : item.icon),
             label: item.label,
@@ -78,25 +89,8 @@ class _MainShellState extends State<MainShell> {
   
   /// Handles navigation bar tap
   void _onNavBarTap(int index) {
-    if (index != _currentIndex) {
-      setState(() {
-        _currentIndex = index;
-      });
-      context.go(_navigationItems[index].route);
-    }
-  }
-  
-  /// Updates the current index based on the current route
-  void updateIndex(String location) {
-    final newIndex = _navigationItems.indexWhere(
-      (item) => location.startsWith(item.route),
-    );
-    
-    if (newIndex != -1 && newIndex != _currentIndex) {
-      setState(() {
-        _currentIndex = newIndex;
-      });
-    }
+    final targetRoute = _navigationItems[index].route;
+    context.go(targetRoute);
   }
 }
 

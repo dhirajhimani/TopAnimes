@@ -24,6 +24,14 @@ import 'features/home/domain/usecases/get_top_manga.dart';
 import 'presentation/cubit/anime_cubit.dart';
 import 'presentation/cubit/home_cubit.dart';
 import 'features/home/presentation/bloc/home_bloc.dart';
+import 'features/favorites/data/datasources/favorites_local_data_source.dart';
+import 'features/favorites/data/repositories/favorites_repository_impl.dart';
+import 'features/favorites/domain/repositories/favorites_repository.dart';
+import 'features/favorites/domain/usecases/add_to_favorites.dart';
+import 'features/favorites/domain/usecases/get_favorites.dart';
+import 'features/favorites/domain/usecases/is_favorite.dart';
+import 'features/favorites/domain/usecases/remove_from_favorites.dart';
+import 'features/favorites/presentation/bloc/favorites_bloc.dart';
 
 /// Service locator instance
 final sl = GetIt.instance;
@@ -46,6 +54,10 @@ Future<void> initializeDependencies() async {
     () => HomeRemoteDataSourceImpl(networkClient: sl()),
   );
   
+  sl.registerLazySingleton<FavoritesLocalDataSource>(
+    () => FavoritesLocalDataSourceImpl(),
+  );
+  
   sl.registerLazySingleton<AnimeRemoteDataSource>(
     () => AnimeRemoteDataSourceImpl(networkClient: sl()),
   );
@@ -63,6 +75,10 @@ Future<void> initializeDependencies() async {
     () => HomeRepositoryImpl(remoteDataSource: sl()),
   );
   
+  sl.registerLazySingleton<FavoritesRepository>(
+    () => FavoritesRepositoryImpl(localDataSource: sl()),
+  );
+  
   sl.registerLazySingleton<AnimeRepository>(
     () => AnimeRepositoryImpl(
       remoteDataSource: sl(),
@@ -77,11 +93,23 @@ Future<void> initializeDependencies() async {
   sl.registerLazySingleton(() => GetTopAiringAnime(sl<home_repo.HomeRepository>()));
   sl.registerLazySingleton(() => GetTopManga(sl<home_repo.HomeRepository>()));
   
+  // Favorites feature use cases
+  sl.registerLazySingleton(() => GetFavorites(sl<FavoritesRepository>()));
+  sl.registerLazySingleton(() => AddToFavorites(sl<FavoritesRepository>()));
+  sl.registerLazySingleton(() => RemoveFromFavorites(sl<FavoritesRepository>()));
+  sl.registerLazySingleton(() => IsFavorite(sl<FavoritesRepository>()));
+  
   // Cubits and BLoCs
   sl.registerFactory(() => HomeCubit(repository: sl()));
   sl.registerFactory(() => AnimeCubit(getTopAnime: sl()));
   sl.registerFactory(() => HomeBloc(
     getTopAiringAnime: sl(), 
     getTopManga: sl(),
+  ));
+  sl.registerFactory(() => FavoritesBloc(
+    getFavorites: sl(),
+    addToFavorites: sl(),
+    removeFromFavorites: sl(),
+    isFavorite: sl(),
   ));
 }

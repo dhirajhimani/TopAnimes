@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'core/config/app_config.dart';
 import 'core/router/app_router.dart';
 import 'injection_container.dart';
 import 'presentation/cubit/home_cubit.dart';
 import 'features/home/presentation/bloc/home_bloc.dart';
+import 'features/favorites/presentation/bloc/favorites_bloc.dart';
+import 'features/favorites/domain/entities/favorite_content.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize Hive
+  await Hive.initFlutter();
+  Hive.registerAdapter(FavoriteContentAdapter());
   
   // Initialize dependencies
   await initializeDependencies();
@@ -30,6 +37,9 @@ class OtakuHubLiteApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<HomeBloc>()..add(const LoadHomeData()),
+        ),
+        BlocProvider(
+          create: (context) => sl<FavoritesBloc>()..add(const LoadFavorites()),
         ),
       ],
       child: MaterialApp.router(
