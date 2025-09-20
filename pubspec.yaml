@@ -20,6 +20,7 @@ dependencies:
   
   # Networking
   dio: ^5.7.0
+  http: ^1.1.0
   
   # Functional Programming
   fpdart: ^1.1.0

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../domain/entities/content.dart';
+import '../../../favorites/presentation/bloc/favorites_bloc.dart';
 import '../bloc/detail_bloc.dart';
 import '../bloc/detail_event.dart';
 import '../bloc/detail_state.dart';
@@ -23,23 +24,60 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => DetailBloc()..add(LoadContentDetail(content)),
+      create: (context) => DetailBloc(
+        favoritesBloc: context.read<FavoritesBloc>(),
+      )..add(LoadContentDetail(content)),
       child: BlocBuilder<DetailBloc, DetailState>(
         builder: (context, state) {
-          return Scaffold(
-            body: CustomScrollView(
-              slivers: [
-                _buildSliverAppBar(context, state),
-                SliverToBoxAdapter(
-                  child: _buildContent(context, state),
-                ),
-              ],
+          // Get dynamic theme based on extracted color
+          final theme = _buildAdaptiveTheme(context, state);
+          
+          return Theme(
+            data: theme,
+            child: Scaffold(
+              body: CustomScrollView(
+                slivers: [
+                  _buildSliverAppBar(context, state),
+                  SliverToBoxAdapter(
+                    child: _buildContent(context, state),
+                  ),
+                ],
+              ),
+              floatingActionButton: _buildFloatingActionButtons(context, state),
             ),
-            floatingActionButton: _buildFloatingActionButton(context, state),
           );
         },
       ),
     );
+  }
+  
+  /// Builds adaptive theme based on dominant color
+  ThemeData _buildAdaptiveTheme(BuildContext context, DetailState state) {
+    final baseTheme = Theme.of(context);
+    
+    if (state is DetailLoaded && state.dominantColor != null) {
+      final dominantColor = state.dominantColor!;
+      
+      // Create a color scheme from the dominant color
+      final colorScheme = ColorScheme.fromSeed(
+        seedColor: dominantColor,
+        brightness: baseTheme.brightness,
+      );
+      
+      return baseTheme.copyWith(
+        colorScheme: colorScheme,
+        appBarTheme: baseTheme.appBarTheme.copyWith(
+          backgroundColor: colorScheme.surface,
+          foregroundColor: colorScheme.onSurface,
+        ),
+        floatingActionButtonTheme: baseTheme.floatingActionButtonTheme.copyWith(
+          backgroundColor: colorScheme.primary,
+          foregroundColor: colorScheme.onPrimary,
+        ),
+      );
+    }
+    
+    return baseTheme;
   }
   
   /// Builds the sliver app bar with image background
@@ -49,6 +87,27 @@ class DetailPage extends StatelessWidget {
     return SliverAppBar(
       expandedHeight: 300,
       pinned: true,
+      actions: [
+        // Color indicator when dominant color is extracted
+        if (state is DetailLoaded && state.dominantColor != null)
+          Container(
+            margin: const EdgeInsets.all(8),
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              color: state.dominantColor,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white, width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.3),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+          ),
+      ],
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           fit: StackFit.expand,
@@ -355,18 +414,38 @@ class DetailPage extends StatelessWidget {
     return const SizedBox.shrink();
   }
   
-  /// Builds floating action button
-  Widget? _buildFloatingActionButton(BuildContext context, DetailState state) {
+  /// Builds floating action buttons
+  Widget? _buildFloatingActionButtons(BuildContext context, DetailState state) {
     final currentContent = _getCurrentContent(state);
     
-    if (currentContent.url.isEmpty) {
-      return null;
-    }
-    
-    return FloatingActionButton.extended(
-      onPressed: () => _openUrl(context, currentContent.url),
-      icon: const Icon(Icons.open_in_new),
-      label: const Text('View on Web'),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Favorite button
+        if (state is DetailLoaded)
+          FloatingActionButton(
+            heroTag: "favorite",
+            onPressed: () {
+              context.read<DetailBloc>().add(ToggleFavorite(currentContent));
+            },
+            child: Icon(
+              state.isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: state.isFavorite ? Colors.red : null,
+            ),
+          ),
+        
+        if (state is DetailLoaded && currentContent.url.isNotEmpty)
+          const SizedBox(height: 16),
+        
+        // View on web button
+        if (currentContent.url.isNotEmpty)
+          FloatingActionButton.extended(
+            heroTag: "view_web",
+            onPressed: () => _openUrl(context, currentContent.url),
+            icon: const Icon(Icons.open_in_new),
+            label: const Text('View on Web'),
+          ),
+      ],
     );
   }
   
