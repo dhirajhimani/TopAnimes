@@ -7,8 +7,6 @@ import '../../core/network/network_client.dart';
 import '../../core/services/mock_data_service.dart';
 import '../../domain/entities/anime.dart';
 import '../../domain/entities/manga.dart';
-import '../models/anime_model.dart';
-import '../models/manga_model.dart';
 import '../models/top_anime_response.dart';
 import '../models/top_manga_response.dart';
 

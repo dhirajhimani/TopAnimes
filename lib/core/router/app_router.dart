@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../domain/entities/content.dart';
-import '../features/detail/presentation/pages/detail_page.dart';
-import '../features/home/presentation/pages/home_page.dart';
-import '../features/search/presentation/pages/search_page.dart';
+import 'package:top_anime/domain/entities/content.dart';
+import 'package:top_anime/features/detail/presentation/pages/detail_page.dart';
+import 'package:top_anime/features/home/presentation/pages/home_page.dart';
+import 'package:top_anime/features/search/presentation/pages/search_page.dart';
 
 /// Application routes configuration
 class AppRouter {
@@ -18,14 +18,14 @@ class AppRouter {
           name: 'home',
           builder: (context, state) => const HomePage(),
         ),
-        
+
         // Search route
         GoRoute(
           path: '/search',
           name: 'search',
           builder: (context, state) => const SearchPage(),
         ),
-        
+
         // Detail route
         GoRoute(
           path: '/detail',
@@ -39,7 +39,7 @@ class AppRouter {
             return DetailPage(content: content);
           },
         ),
-        
+
         // Light novels route (placeholder for future implementation)
         GoRoute(
           path: '/light-novels',
@@ -49,7 +49,7 @@ class AppRouter {
             message: 'Light novel browser coming soon!',
           ),
         ),
-        
+
         // Anime list route (placeholder)
         GoRoute(
           path: '/anime',
@@ -59,7 +59,7 @@ class AppRouter {
             message: 'Full anime list coming soon!',
           ),
         ),
-        
+
         // Manga list route (placeholder)
         GoRoute(
           path: '/manga',
@@ -70,9 +70,8 @@ class AppRouter {
           ),
         ),
       ],
-      errorBuilder: (context, state) => _ErrorPage(
-        error: state.error?.toString() ?? 'Unknown error',
-      ),
+      errorBuilder: (context, state) =>
+          _ErrorPage(error: state.error?.toString() ?? 'Unknown error'),
     );
   }
 }
@@ -81,30 +80,20 @@ class AppRouter {
 class _PlaceholderPage extends StatelessWidget {
   final String title;
   final String message;
-  
-  const _PlaceholderPage({
-    required this.title,
-    required this.message,
-  });
-  
+
+  const _PlaceholderPage({required this.title, required this.message});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text(title), centerTitle: true),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(32),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.construction,
-                size: 64,
-                color: Colors.orange[300],
-              ),
+              Icon(Icons.construction, size: 64, color: Colors.orange[300]),
               const SizedBox(height: 16),
               Text(
                 'Coming Soon',
@@ -115,9 +104,9 @@ class _PlaceholderPage extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 message,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.grey[600],
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
@@ -136,27 +125,20 @@ class _PlaceholderPage extends StatelessWidget {
 /// Error page for route errors
 class _ErrorPage extends StatelessWidget {
   final String error;
-  
+
   const _ErrorPage({required this.error});
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Error'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Error'), centerTitle: true),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(32),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.error_outline,
-                size: 64,
-                color: Colors.red[300],
-              ),
+              Icon(Icons.error_outline, size: 64, color: Colors.red[300]),
               const SizedBox(height: 16),
               Text(
                 'Page Not Found',
@@ -167,9 +149,9 @@ class _ErrorPage extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 'The page you requested could not be found.',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.grey[600],
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),

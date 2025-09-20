@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:top_anime/core/error/failures.dart';
 
 import '../../core/config/app_config.dart';
 import '../../data/repositories/home_repository.dart';
@@ -22,20 +24,20 @@ class HomeLoading extends HomeState {}
 class HomeLoaded extends HomeState {
   /// Top airing anime list
   final List<Anime> topAiringAnime;
-  
+
   /// Top manga list
   final List<Manga> topManga;
-  
+
   /// Whether using mock data
   final bool usingMockData;
-  
+
   /// Creates a [HomeLoaded] state
   HomeLoaded({
     required this.topAiringAnime,
     required this.topManga,
     required this.usingMockData,
   });
-  
+
   @override
   List<Object> get props => [topAiringAnime, topManga, usingMockData];
 }
@@ -44,10 +46,10 @@ class HomeLoaded extends HomeState {
 class HomeError extends HomeState {
   /// Error message
   final String message;
-  
+
   /// Creates a [HomeError] state
   HomeError(this.message);
-  
+
   @override
   List<Object> get props => [message];
 }
@@ -56,56 +58,59 @@ class HomeError extends HomeState {
 class HomeCubit extends Cubit<HomeState> {
   /// Repository for home data
   final HomeRepository _repository;
-  
+
   /// Creates a [HomeCubit]
-  HomeCubit({
-    required HomeRepository repository,
-  }) : _repository = repository,
-        super(HomeInitial());
-  
+  HomeCubit({required HomeRepository repository})
+    : _repository = repository,
+      super(HomeInitial());
+
   /// Loads home screen data
   Future<void> loadHomeData() async {
     emit(HomeLoading());
-    
+
     if (AppConfig.isDebug) {
       // ignore: avoid_print
       print('🏠 Loading home data... Mock: ${AppConfig.useMockData}');
     }
-    
+
     // Load both anime and manga concurrently
     final results = await Future.wait([
       _repository.getTopAiringAnime(),
       _repository.getTopManga(),
     ]);
-    
-    final animeResult = results[0];
-    final mangaResult = results[1];
-    
+
+    final Either<Failure, List<Anime>> animeResult =
+        results[0] as Either<Failure, List<Anime>>;
+    final Either<Failure, List<Manga>> mangaResult =
+        results[1] as Either<Failure, List<Manga>>;
+
     // Check if both requests succeeded
     if (animeResult.isRight() && mangaResult.isRight()) {
       final animeList = animeResult.getRight().getOrElse(() => <Anime>[]);
       final mangaList = mangaResult.getRight().getOrElse(() => <Manga>[]);
-      
-      emit(HomeLoaded(
-        topAiringAnime: animeList,
-        topManga: mangaList,
-        usingMockData: AppConfig.useMockData,
-      ));
+
+      emit(
+        HomeLoaded(
+          topAiringAnime: animeList,
+          topManga: mangaList,
+          usingMockData: AppConfig.useMockData,
+        ),
+      );
     } else {
       // Handle failure - prioritize anime failure if both fail
-      final failure = animeResult.isLeft() 
+      final failure = animeResult.isLeft()
           ? animeResult.getLeft().getOrElse(() => throw Exception())
           : mangaResult.getLeft().getOrElse(() => throw Exception());
-      
+
       emit(HomeError(failure.message));
     }
   }
-  
+
   /// Refreshes home screen data
   Future<void> refreshHomeData() async {
     await loadHomeData();
   }
-  
+
   /// Toggles mock data and reloads
   Future<void> toggleMockData() async {
     AppConfig.toggleMockData();

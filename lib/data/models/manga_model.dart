@@ -8,34 +8,43 @@ part 'manga_model.g.dart';
 @JsonSerializable()
 class MangaModel {
   /// Unique ID of the manga from MyAnimeList
-  @JsonKey(name: 'mal_id')
+  @JsonKey(name: 'mal_id', defaultValue: 0)
   final int id;
   
   /// Title of the manga
+  @JsonKey(defaultValue: '')
   final String title;
   
   /// Web URL of the manga
+  @JsonKey(defaultValue: '')
   final String url;
   
   /// Images object containing different sizes
+  // @JsonKey(defaultValue: ImagesModel.empty)
   final ImagesModel images;
   
   /// Synopsis of the manga
-  final String? synopsis;
-  
+  @JsonKey(defaultValue: '')
+  final String synopsis;
+
   /// Score/rating of the manga
-  final double? score;
-  
+  @JsonKey(defaultValue: 0.0)
+  final double score;
+
   /// Publication status of the manga
+  @JsonKey(defaultValue: '')
   final String status;
   
   /// Number of chapters
-  final int? chapters;
-  
+  @JsonKey(defaultValue: 0)
+  final int chapters;
+
   /// Number of volumes
-  final int? volumes;
-  
+  @JsonKey(defaultValue: 0)
+  final int volumes;
+
   /// Number of members who have this manga in their list
+  @JsonKey(defaultValue: 0)
   final int members;
   
   /// Creates a [MangaModel]
@@ -44,18 +53,30 @@ class MangaModel {
     required this.title,
     required this.url,
     required this.images,
-    this.synopsis,
-    this.score,
+    required this.synopsis,
+    required this.score,
     required this.status,
-    this.chapters,
-    this.volumes,
+    required this.chapters,
+    required this.volumes,
     required this.members,
   });
   
   /// Creates a [MangaModel] from JSON
-  factory MangaModel.fromJson(Map<String, dynamic> json) => 
-      _$MangaModelFromJson(json);
-  
+  factory MangaModel.fromJson(Map<String, dynamic> json) {
+    return MangaModel(
+      id: json['mal_id'] as int? ?? 0,
+      title: json['title'] as String? ?? '',
+      url: json['url'] as String? ?? '',
+      images: json['images'] != null ? ImagesModel.fromJson(json['images'] as Map<String, dynamic>) : ImagesModel.empty,
+      synopsis: json['synopsis'] as String? ?? '',
+      score: (json['score'] as num?)?.toDouble() ?? 0.0,
+      status: json['status'] as String? ?? '',
+      chapters: json['chapters'] as int? ?? 0,
+      volumes: json['volumes'] as int? ?? 0,
+      members: json['members'] as int? ?? 0,
+    );
+  }
+
   /// Converts this [MangaModel] to JSON
   Map<String, dynamic> toJson() => _$MangaModelToJson(this);
   
@@ -66,7 +87,7 @@ class MangaModel {
       title: title,
       url: url,
       imageUrl: images.jpg.imageUrl,
-      synopsis: synopsis ?? '',
+      synopsis: synopsis,
       score: score,
       status: status,
       chapters: chapters,
@@ -81,12 +102,12 @@ class MangaModel {
       id: manga.id,
       title: manga.title,
       url: manga.url,
-      images: ImagesModel.empty(),
+      images: ImagesModel.empty,
       synopsis: manga.synopsis,
-      score: manga.score,
+      score: manga.score ?? 0.0,
       status: manga.status,
-      chapters: manga.chapters,
-      volumes: manga.volumes,
+      chapters: manga.chapters ?? 0,
+      volumes: manga.volumes ?? 0,
       members: manga.members,
     );
   }

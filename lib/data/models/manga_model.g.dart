@@ -7,16 +7,16 @@ part of 'manga_model.dart';
 // **************************************************************************
 
 MangaModel _$MangaModelFromJson(Map<String, dynamic> json) => MangaModel(
-  id: (json['mal_id'] as num).toInt(),
-  title: json['title'] as String,
-  url: json['url'] as String,
+  id: (json['mal_id'] as num?)?.toInt() ?? 0,
+  title: json['title'] as String? ?? '',
+  url: json['url'] as String? ?? '',
   images: ImagesModel.fromJson(json['images'] as Map<String, dynamic>),
-  synopsis: json['synopsis'] as String?,
-  score: (json['score'] as num?)?.toDouble(),
-  status: json['status'] as String,
-  chapters: (json['chapters'] as num?)?.toInt(),
-  volumes: (json['volumes'] as num?)?.toInt(),
-  members: (json['members'] as num).toInt(),
+  synopsis: json['synopsis'] as String? ?? '',
+  score: (json['score'] as num?)?.toDouble() ?? 0.0,
+  status: json['status'] as String? ?? '',
+  chapters: (json['chapters'] as num?)?.toInt() ?? 0,
+  volumes: (json['volumes'] as num?)?.toInt() ?? 0,
+  members: (json['members'] as num?)?.toInt() ?? 0,
 );
 
 Map<String, dynamic> _$MangaModelToJson(MangaModel instance) =>

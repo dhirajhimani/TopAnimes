@@ -7,29 +7,39 @@ part 'light_novel_response.g.dart';
 @JsonSerializable()
 class LightNovelResponse {
   /// List of light novel data
+  @JsonKey(defaultValue: [])
   final List<LightNovelModel> results;
   
   /// Total count of results
-  final int? count;
-  
+  @JsonKey(defaultValue: 0)
+  final int count;
+
   /// Next page URL
-  final String? next;
-  
+  @JsonKey(defaultValue: '')
+  final String next;
+
   /// Previous page URL
-  final String? previous;
-  
+  @JsonKey(defaultValue: '')
+  final String previous;
+
   /// Creates a [LightNovelResponse]
   const LightNovelResponse({
     required this.results,
-    this.count,
-    this.next,
-    this.previous,
+    required this.count,
+    required this.next,
+    required this.previous,
   });
   
   /// Creates a [LightNovelResponse] from JSON
-  factory LightNovelResponse.fromJson(Map<String, dynamic> json) => 
-      _$LightNovelResponseFromJson(json);
-  
+  factory LightNovelResponse.fromJson(Map<String, dynamic> json) {
+    return LightNovelResponse(
+      results: (json['results'] as List<dynamic>?)?.map((e) => LightNovelModel.fromJson(e as Map<String, dynamic>)).toList() ?? [],
+      count: json['count'] as int? ?? 0,
+      next: json['next'] as String? ?? '',
+      previous: json['previous'] as String? ?? '',
+    );
+  }
+
   /// Converts this [LightNovelResponse] to JSON
   Map<String, dynamic> toJson() => _$LightNovelResponseToJson(this);
 }

@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
-import '../../../core/error/failures.dart';
-import '../../../domain/entities/anime.dart';
-import '../../../domain/entities/manga.dart';
+import 'package:top_anime/core/error/failures.dart';
+import 'package:top_anime/domain/entities/anime.dart';
+import 'package:top_anime/domain/entities/manga.dart';
 
 /// Repository contract for home screen data operations
 abstract class HomeRepository {

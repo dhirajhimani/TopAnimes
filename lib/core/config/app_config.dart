@@ -7,7 +7,7 @@ class AppConfig {
   static bool useMockData = false;
   
   /// Whether to enable detailed API logging
-  static bool enableApiLogging = isDebug;
+  static bool enableApiLogging = false;
   
   /// Whether to show API response times
   static bool showApiTiming = isDebug;

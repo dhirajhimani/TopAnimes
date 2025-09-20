@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:top_anime/domain/entities/anime.dart';
+import 'package:top_anime/domain/entities/manga.dart';
 
 import '../cubit/home_cubit.dart';
 import '../widgets/anime_card.dart';
@@ -192,7 +194,7 @@ class HomePage extends StatelessWidget {
   }
   
   /// Builds the anime grid
-  Widget _buildAnimeGrid(List<dynamic> animeList) {
+  Widget _buildAnimeGrid(List<Anime> animeList) {
     if (animeList.isEmpty) {
       return const _EmptyStateWidget(
         icon: Icons.play_circle_outline,
@@ -218,7 +220,7 @@ class HomePage extends StatelessWidget {
   }
   
   /// Builds the manga grid
-  Widget _buildMangaGrid(List<dynamic> mangaList) {
+  Widget _buildMangaGrid(List<Manga> mangaList) {
     if (mangaList.isEmpty) {
       return const _EmptyStateWidget(
         icon: Icons.book_outlined,

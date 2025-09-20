@@ -266,7 +266,7 @@ class DetailPage extends StatelessWidget {
         }
         if (metadata['season'] != null) {
           chips.add(MetadataChip(
-            label: metadata['season'],
+            label: metadata['season'] as String,
             icon: Icons.calendar_today,
           ));
         }
@@ -296,7 +296,7 @@ class DetailPage extends StatelessWidget {
         }
         if (metadata['language'] != null) {
           chips.add(MetadataChip(
-            label: metadata['language'],
+            label: metadata['language'] as String,
             icon: Icons.language,
           ));
         }
@@ -325,7 +325,7 @@ class DetailPage extends StatelessWidget {
             title: 'Broadcast',
             icon: Icons.tv,
             child: Text(
-              metadata['broadcast'],
+              metadata['broadcast']as String,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           );
@@ -333,8 +333,9 @@ class DetailPage extends StatelessWidget {
         break;
       
       case ContentType.lightNovel:
-        if (metadata['authors'] != null && metadata['authors'].isNotEmpty) {
-          final authors = metadata['authors'] as List<String>;
+        var metadataAuthors = metadata['authors'] as List<dynamic>?;
+        if (metadataAuthors != null && metadataAuthors.isNotEmpty) {
+          final authors = metadataAuthors as List<String>;
           return DetailInfoCard(
             title: 'Authors',
             icon: Icons.person,
